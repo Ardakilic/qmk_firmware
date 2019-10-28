@@ -29,6 +29,7 @@ enum custom_keycodes {
 };
 
 // Song name definitions. These are used when layers are switched.
+
 float qwerty_song[][2] = SONG(QWERTY_SOUND);
 float colemak_song[][2] = SONG(COLEMAK_SOUND);
 
