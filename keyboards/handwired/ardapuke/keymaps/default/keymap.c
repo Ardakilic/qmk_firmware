@@ -19,6 +19,7 @@
 
 #include QMK_KEYBOARD_H
 
+// Layer names
 #define _MAIN 0
 #define _FUNC 1
 
@@ -27,7 +28,7 @@ enum custom_keycodes {
   LOCKSCREEN = SAFE_RANGE,
 };
 
-
+// Song name definitions. These are used when layers are switched.
 float qwerty_song[][2] = SONG(QWERTY_SOUND);
 float colemak_song[][2] = SONG(COLEMAK_SOUND);
 
