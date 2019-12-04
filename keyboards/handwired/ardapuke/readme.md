@@ -1,12 +1,10 @@
 # ardapuke
 
-
 ![ardapuke](https://i.imgur.com/8YxJRRE.png)
 
 A 2x5 Macropad
 
 This macropad is using the [case made by jakebot](https://www.thingiverse.com/thing:2509293).
-
 
 Keyboard Maintainer: [Arda Kilicdagi](https://github.com/ardakilic)    
 Hardware Supported: The PCBs, controllers supported  
