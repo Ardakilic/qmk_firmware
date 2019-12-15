@@ -224,3 +224,15 @@ void matrix_init_user(void) {}
 void matrix_scan_user(void) {}
 
 void led_set_user(uint8_t usb_led) {}
+
+// I like greenish cyan for my single colored animations
+//extern rgblight_config_t rgblight_config;
+void keyboard_post_init_user(void) {
+  //rgblight_config.hue    = 100;
+  //rgblight_config.sat    = 255;
+  //rgblight_config.val    = 255;
+  rgblight_enable_noeeprom(); // enables Rgb, without saving settings
+  rgblight_sethsv_noeeprom(100, 255, 255); // sets the color to greenish without saving
+  //rgblight_sethsv_noeeprom_turquoise();
+
+}
