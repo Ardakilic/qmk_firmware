@@ -1,10 +1,8 @@
 # Chotanck
 
-![aranck](https://i.imgur.com/IWfovI2l.jpg)
+![aranck](https://i.imgur.com/BthPF7A.png)
 
-![aranck2](https://i.imgur.com/rrhEhQZl.jpg)
-
-A handwired 40% ortholinear keyboard.
+A handwired 40% ortholinear keyboard with underglow LEDs and a passive buzzer.
 
 Keyboard Maintainer: [Arda Kilicdagi](https://github.com/ardakilic)  
 Hardware Supported: Pro Micro
