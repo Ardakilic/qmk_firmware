@@ -6,10 +6,12 @@ This layout aims to have a similar layout to Apple keyboards while using ISO lay
 
 The changes that were applied over default layout:
 
-* Make Win/cmd keys right next to space bar just like Apple keyboards.
+* Supports both Windows and Mac Layouts on a single layout now.
 * Adding a power (`KC_POWER`) key, so the lock screen shortcut works.
 * Re-use the page up and page down keys to make ["é] (`KC_NONUS_BSLASH`) and [<>|] (`KC_GRAVE`) keys more accessible.
 * Optimize the function layer, by removing the mouse movement combinations and adding additional media keys.
 * Swap the positions of volume up and volume down and mute buttons on function layer, so these keys are actually with the same order as Apple keyboard layout.
+* Added a LALT layer (Taken from `dig` layout) so it'll be easier just to alt+f4
+* Added a Numpad Layer (Taken from `fezzant` layout)
 
 I'm re-purposing page up and page down keys in this layout, because in macOS alt/option + arrow keys, in Windows and Linux, space bar/shift spacebar combinations already cover their work, and is more accessible if you'd ask me.
