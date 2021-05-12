@@ -21,7 +21,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Layers
 enum {
+<<<<<<< HEAD
   _QWERTY,
+=======
+  _QWERTY = SAFE_RANGE,
+>>>>>>> 0d755a951e (Layer name ensures it's in safe range)
   _LOWER,
   _RAISE,
   _SPACE,
