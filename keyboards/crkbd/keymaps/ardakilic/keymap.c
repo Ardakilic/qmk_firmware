@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Layers
 enum {
-  _QWERTY = 0,
+  _QWERTY = SAFE_RANGE,
   _LOWER,
   _RAISE,
   _SPACE,
