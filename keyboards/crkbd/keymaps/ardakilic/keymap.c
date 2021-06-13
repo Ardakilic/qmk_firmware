@@ -105,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
     LT(_NUMPAD, KC_ESC), KC_A,  KC_S, KC_D,  KC_F,  KC_G,                           KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
     LSFT_T(KC_CAPS), KC_Z, KC_X, LCTL_T(KC_C), LALT_T(KC_V), LGUI_T(KC_B),          RGUI_T(KC_N),  RALT_T(KC_M),  RCTL_T(KC_COMM), KC_DOT, KC_SLSH, KC_SFTENT /*KC_ENT*/,
-                                        KC_LGUI, LT(_LOWER, KC_BSLS),KC_SPC,    KC_ENT, LT(_RAISE, KC_NONUS_BSLASH), KC_RALT
+                                        KC_LGUI, LT(_LOWER, KC_BSLS),LT(_SPACE, KC_SPC),    KC_ENT, LT(_RAISE, KC_NONUS_BSLASH), KC_RALT
 
   ),
 
@@ -225,6 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 #ifdef OLED_DRIVER_ENABLE
+#include <stdio.h>
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master()) {
     return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
@@ -232,11 +233,10 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-// customn function called by oled_task_user
+
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (biton32(layer_state)) {
-        switch (layer_state) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Default"), false);
             break;
@@ -246,14 +246,22 @@ void oled_render_layer_state(void) {
         case _RAISE:
             oled_write_ln_P(PSTR("Raise"), false);
             break;
-        case _ADJUST|_LOWER:
-        case _ADJUST|_RAISE:
-        case _ADJUST|_LOWER|_RAISE:
-        case _ADJUST|_LOWER|_RAISE|_SPACE:
-        case _ADJUST|_LOWER|_RAISE|_SPACE|_NUMPAD:
+        case _SPACE:
+            oled_write_ln_P(PSTR("Space"), false);
+            break;
+        case _NUMPAD:
+            oled_write_ln_P(PSTR("Numpad"), false);
+            break;
+        case _ADJUST:
+        // case _ADJUST|_LOWER:
+        // case _ADJUST|_RAISE:
+        // case _ADJUST|_LOWER|_RAISE:
+        // case _ADJUST|_LOWER|_RAISE|_SPACE:
+        // case _ADJUST|_LOWER|_RAISE|_SPACE|_NUMPAD:
             oled_write_ln_P(PSTR("Adjust"), false);
             break;
-        }
+        default:
+            oled_write_ln_P(PSTR("?????"), false);
     }
 }
 
