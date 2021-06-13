@@ -21,12 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Layers
 enum {
-  _QWERTY = SAFE_RANGE,
-  _LOWER,
-  _RAISE,
-  _SPACE,
-  _NUMPAD,
-  _ADJUST
+  _QWERTY = 0,
+  _LOWER = 1,
+  _RAISE = 2,
+  _SPACE = 3,
+  _NUMPAD = 4,
+  _ADJUST = 5
 };
 
 //KC_NONUS_BSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
@@ -128,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,            KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC,
     KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,                   DOLLAR_SIGN,    KC_UNDS,  KC_PLUS,  KC_LBRC,  KC_RBRC,  KC_EQL,
     KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,  KC_F12,                SQUARE_OPEN, SQUARE_CLOSE, CURLY_OPEN, CURLY_CLOSE, KC_GRV, LSFT(KC_GRV),
-                                _______, _______, _______,        _______, _______, _______
+                                _______, _______, _______,        _______, MO(_ADJUST), _______
   ),
 
 /*
@@ -170,8 +170,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
   [_SPACE] = LAYOUT_split_3x6_3(
     _______, LGUI(KC_1), LGUI(KC_2), LGUI(KC_3), LGUI(KC_4), LGUI(KC_5),    LGUI(KC_6), LGUI(KC_7), LGUI(KC_8),  LGUI(KC_9), LGUI(KC_0), LOCKSCREEN,
-    KC_BRMD,  KC_BRMU,  _______,  _______,  _______,  _______,              KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______
-    KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,  KC_F12,                       _______, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    KC_BRMD,  KC_BRMU,  _______,  _______,  _______,  _______,              KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______,
+    KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,  KC_F12,                       _______, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY,
                                 _______, _______, _______,        _______, _______, _______
   ),
 
@@ -224,11 +224,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-// Enable the adjust layer when both lower and raise are pressed
-layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master()) {
@@ -241,6 +236,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (biton32(layer_state)) {
+        switch (layer_state) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Default"), false);
             break;
@@ -250,22 +246,14 @@ void oled_render_layer_state(void) {
         case _RAISE:
             oled_write_ln_P(PSTR("Raise"), false);
             break;
-        case _SPACE:
-            oled_write_ln_P(PSTR("Space"), false);
-            break;
-        case _NUMPAD:
-            oled_write_ln_P(PSTR("Numpad"), false);
-            break;
-        case _ADJUST:
-        // case _ADJUST|_LOWER:
-        // case _ADJUST|_RAISE:
-        // case _ADJUST|_LOWER|_RAISE:
-        // case _ADJUST|_LOWER|_RAISE|_SPACE:
-        // case _ADJUST|_LOWER|_RAISE|_SPACE|_NUMPAD:
+        case _ADJUST|_LOWER:
+        case _ADJUST|_RAISE:
+        case _ADJUST|_LOWER|_RAISE:
+        case _ADJUST|_LOWER|_RAISE|_SPACE:
+        case _ADJUST|_LOWER|_RAISE|_SPACE|_NUMPAD:
             oled_write_ln_P(PSTR("Adjust"), false);
             break;
-        default:
-            oled_write_ln_P(PSTR("?????"), false);
+        }
     }
 }
 
