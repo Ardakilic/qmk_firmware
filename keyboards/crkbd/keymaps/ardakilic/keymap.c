@@ -26,7 +26,8 @@ enum {
   _RAISE = 2,
   _SPACE = 3,
   _NUMPAD = 4,
-  _ADJUST = 5
+  _SODA = 5,
+  _ADJUST = 6
 };
 
 //KC_NONUS_BSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
@@ -46,7 +47,7 @@ enum {
 #define VERTICAL_PIPE RALT(KC_EQL)
 #define BACKTICK RALT(KC_BSLS)
 #define TILDE RALT(KC_RBRC)
-#define NUMBER_SIGN RALT(KC_3)
+#define NUMBER_SIGN RALT(KC_3) //hashtag sign
 #define LOCKSCREEN LCTL(LSFT(KC_POWER)) // Screen Lock shortcut for OSX
 
 /* 
@@ -97,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     | SftCaps|   Z    |   X    | C/CTRL |  V/ALT |  B/OS  |      |  N/OS  | M/ALT  | Ö/CTRL |   Ç    |   .    | SftEnt|
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
                                     ,-----------------------,  ,-----------------------.
-                                    |  OS   | Lwr|, | Space*|  | SftEnt|Raise|"| R-Alt |
+                                    |  OS   | Lwr|, | Space*|  | Enter*|Raise|"| R-Alt |
                                    /|-------+-------+-------'  +-------+-------+-------|\
   ),
 */
@@ -105,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
     LT(_NUMPAD, KC_ESC), KC_A,  KC_S, KC_D,  KC_F,  KC_G,                           KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
     LSFT_T(KC_CAPS), KC_Z, KC_X, LCTL_T(KC_C), LALT_T(KC_V), LGUI_T(KC_B),          RGUI_T(KC_N),  RALT_T(KC_M),  RCTL_T(KC_COMM), KC_DOT, KC_SLSH, KC_SFTENT /*KC_ENT*/,
-                                        KC_LGUI, LT(_LOWER, KC_BSLS),LT(_SPACE, KC_SPC),    KC_ENT, LT(_RAISE, KC_NONUS_BSLASH), KC_RALT
+                                        KC_LGUI, LT(_LOWER, KC_BSLS),LT(_SPACE, KC_SPC),    LT(_SODA, KC_ENT), LT(_RAISE, KC_NONUS_BSLASH), KC_RALT
 
   ),
 
@@ -139,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
     |   F1   |   F2   |   F3   |   F4   |   F5   |   F6   |      |        |   *    |   -    |   "\"  |   "|"  |  ,    |
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
-    |   F7   |   F8   |   F9   |   F10  |   F11  |   F12  |      |        |   #    |   "    |   "~"  |   "`"  |  <>|  |
+    |   F7   |   F8   |   F9   |   F10  |   F11  |   F12  |      |    '   |   #    |   "    |   "~"  |   "`"  |  <>|  |
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
                                     ,-----------------------,  ,-----------------------.
                                     |       |       |       |  |       |       |       |
@@ -149,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RAISE] = LAYOUT_split_3x6_3(
     KC_TAB,  KC_1,  KC_2,  KC_3,  KC_4,  KC_5,                       KC_6,  KC_7,  KC_8,  KC_9,  KC_0,  KC_BSPC,
     KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,                   _______, KC_MINS, KC_EQL,  BACKSLASH, VERTICAL_PIPE, KC_BSLS,
-    KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,  KC_F12,                _______, NUMBER_SIGN, KC_NUBS, TILDE, BACKTICK, KC_GRV,
+    KC_F7,  KC_F8,  KC_F9,  KC_F10,  KC_F11,  KC_F12,                KC_AT, NUMBER_SIGN, KC_NUBS, TILDE, BACKTICK, KC_GRV,
                                 _______, _______, _______,        _______, _______, _______
   ),
 
@@ -184,18 +185,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
     |        |        |        |        |        |        |      |   .    |  Num4  |  Num5  |  Num6  |   +    |   *   |
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
-    |        |        |        |        |        |        |      |   ,    |  Num1  |  Num2  |  Num3  |  Num0  |   /   |
+    |        |        |        |        |        |        |      |   ,    |  Num1  |  Num2  |  Num3  |   .    |   /   |
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
                                     ,-----------------------,  ,-----------------------.
-                                    |       |       |       |  |  Ent  |   .   |   ,   |
+                                    |       |       |       |  |  Ent  |  Num0 |  Num0 |
                                    /|-------+-------+-------'  +-------+-------+-------|\
   ),
 */
   [_NUMPAD] = LAYOUT_split_3x6_3(
     _______,  _______,  _______,  _______,  _______,  _______,        KC_PEQL, KC_P7, KC_P8, KC_P9, KC_PMNS, KC_BSPC,
     _______,  _______,  _______,  _______,  _______,  _______,        KC_SLSH, KC_P4, KC_P5, KC_P6, KC_PPLS, KC_PAST,
-    _______,  _______,  _______,  _______,  _______,  _______,        KC_PDOT, KC_P1, KC_P2, KC_P3, KC_P0, KC_PSLS,
-                                      _______, _______, _______,    KC_PENT, KC_SLSH, KC_PDOT
+    _______,  _______,  _______,  _______,  _______,  _______,        KC_PDOT, KC_P1, KC_P2, KC_P3, KC_SLSH, KC_PSLS,
+                                      _______, _______, _______,    KC_PENT, KC_P0, KC_P0
+  ),
+
+
+  /*
+ * SODA LAYER
+ * KC_PDOT is comma on the Turkish layout ¯\_(ツ)_/¯
+  [_TPL] = LAYOUT_wrapper( \
+  //,-----------------------------------------------------.      ,----------------------------------------------------.
+    |        |        |   Up   |        |        |        |      |        |        |        |        |        |       |
+  //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
+    |        |  Left  |  Down  | Right  |        |        |      |        |        |        |        |        |       |
+  //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
+    |        |        |        |        |        |        |      |        |        |        |        |        |       |
+  //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
+                                    ,-----------------------,  ,-----------------------.
+                                    |       |       |       |  |       |       |       |
+                                   /|-------+-------+-------'  +-------+-------+-------|\
+  ),
+*/
+  [_SODA] = LAYOUT_split_3x6_3(
+    _______,  _______,  KC_UP,  _______,  _______,  _______,        _______, _______, _______, _______, _______, _______,
+    _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,  _______,      _______, _______, _______, _______, _______, _______,
+    _______,  _______,  _______,  _______,  _______,  _______,      _______, _______, _______, _______, _______, _______,
+                                      _______, _______, _______,    _______, _______, _______
   ),
 
 
@@ -252,12 +277,15 @@ void oled_render_layer_state(void) {
         case _NUMPAD:
             oled_write_ln_P(PSTR("Numpad"), false);
             break;
+        case _SODA:
+            oled_write_ln_P(PSTR("Soda"), false);
+            break;
         case _ADJUST:
         // case _ADJUST|_LOWER:
         // case _ADJUST|_RAISE:
         // case _ADJUST|_LOWER|_RAISE:
         // case _ADJUST|_LOWER|_RAISE|_SPACE:
-        // case _ADJUST|_LOWER|_RAISE|_SPACE|_NUMPAD:
+        // case _ADJUST|_LOWER|_RAISE|_SPACE|_NUMPAD|_SODA:
             oled_write_ln_P(PSTR("Adjust"), false);
             break;
         default:
