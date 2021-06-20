@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     | SftCaps|   Z    |   X    | C/CTRL |  V/ALT |  B/OS  |      |  N/OS  | M/ALT  | Ö/CTRL |   Ç    |   .    | SftEnt|
   //|--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+-------|
                                     ,-----------------------,  ,-----------------------.
-                                    |  OS   | Lwr|, | Space*|  | Enter*|Raise|"| R-Alt |
+                                    |  OS|. | Lwr|, | Space*|  | Enter*|Raise|"| RAlt|'|
                                    /|-------+-------+-------'  +-------+-------+-------|\
   ),
 */
@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                            KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
     LT(_NUMPAD, KC_ESC), KC_A,  KC_S, KC_D,  KC_F,  KC_G,                           KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
     LSFT_T(KC_CAPS), KC_Z, KC_X, LCTL_T(KC_C), LALT_T(KC_V), LGUI_T(KC_B),          RGUI_T(KC_N),  RALT_T(KC_M),  RCTL_T(KC_COMM), KC_DOT, KC_SLSH, KC_SFTENT /*KC_ENT*/,
-                                        KC_LGUI, LT(_LOWER, KC_BSLS),LT(_SPACE, KC_SPC),    LT(_SODA, KC_ENT), LT(_RAISE, KC_NONUS_BSLASH), KC_RALT
+                                        LGUI_T(KC_SLSH), LT(_LOWER, KC_BSLS),LT(_SPACE, KC_SPC),    LT(_SODA, KC_ENT), LT(_RAISE, KC_NONUS_BSLASH), ROPT_T(KC_AT)
 
   ),
 
