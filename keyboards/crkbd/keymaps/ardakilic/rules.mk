@@ -7,4 +7,4 @@ WPM_ENABLE = yes
 
 # Size optimisations
 MOUSEKEY_ENABLE = no
-# Size optimisations
+# Size optimisations END
