@@ -44,6 +44,7 @@ enum ergotravel_layers {
 #define BACKTICK RALT(KC_BSLS)
 #define TILDE RALT(KC_RBRC)
 #define NUMBER_SIGN RALT(KC_3)
+#define AT_SIGN LALT(KC_Q)
 #define LOCKSCREEN LCTL(LSFT(KC_POWER)) // Screen Lock shortcut for OSX
 
 /* 
@@ -85,21 +86,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
  * ,------------------------------------------------.       ,------------------------------------------------.
- * |  Tab |   Q  |   W  |   E  |   R  |   T  |LBrckt|       |Rbrckt|   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |  Tab |   Q  |   W  |   E  |   R  |   T  |  <   |       | "'"  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
- * |NPdEsc|   A  |   S  |   D  |   F  |   G  | LCbr |       | "$"  |   H  |   J  |   K  |   L  |   Ş  |  İ   |
+ * |NPdEsc|   A  |   S  |   D  |   F  |   G  | "@"  |       | "$"  |   H  |   J  |   K  |   L  |   Ş  |  İ   |
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
  * |SftCps|   Z  |   X  |   C  |   V  |   B  |Enter |       |Space*|   N  |   M  |   Ö  |   Ç  |   .  |SftEtr|
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
- * ||Ctrl | Alt  |Sda|<>|  OS  |  Lower|,  | Space* |       |Enter   |  "|Raise  | Left | Down |  Up  |Right |
+ * ||Ctrl |Sda|<>| Alt  |  OS  |  Lower|,  | Space* |       |Enter   |  "|Raise  | Left | Down |  Up  |Right |
  * `------------------------------------------------'       `------------------------------------------------'
  */
 
   [_QWERTY] = LAYOUT(
-    KC_TAB, KC_Q,KC_W, KC_E, KC_R, KC_T, KC_LBRC,                   /*|*/         KC_RBRC, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,
-    LT(_NUMPAD, KC_ESC),KC_A,KC_S,KC_D,KC_F,KC_G,KC_LCBR,           /*|*/         DOLLAR_SIGN, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
+    KC_TAB, KC_Q,KC_W, KC_E, KC_R, KC_T, KC_GRV,                   /*|*/         KC_AT, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,
+    LT(_NUMPAD, KC_ESC),KC_A,KC_S,KC_D,KC_F,KC_G,AT_SIGN,           /*|*/         DOLLAR_SIGN, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
     LSFT_T(KC_CAPS),KC_Z,KC_X,KC_C,KC_V,KC_B,KC_ENT,                /*|*/         LT(_SPACE, KC_SPC), KC_N,  KC_M,  KC_COMM, KC_DOT, KC_SLSH, KC_SFTENT,
-    KC_LCTL, KC_LALT, LT(_SODA, KC_GRV), KC_LGUI, LT(_LOWER, KC_BSLS),LT(_SPACE, KC_SPC),    /*|*/      KC_ENT, LT(_RAISE, KC_NONUS_BSLASH), KC_LEFT, KC_UP, KC_DOWN, KC_RGHT
+    KC_LCTL, KC_LALT, LT(_SODA, KC_GRV), KC_LGUI, LT(_LOWER, KC_BSLS),LT(_SPACE, KC_SPC),    /*|*/      KC_ENT, LT(_RAISE, KC_NONUS_BSLASH), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
   ),
 
 /* Lower
@@ -128,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
  * |  Del |      |      |      |      |      | Vol- |       | Next | Prev |   *  |   -  | "\"  | "|"  |  ,   |
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
- * |      |      |      |      |      |      | Mute |       | Stop |      |  "$" |  "{" |  "}" |  <   |  ">" |
+ * |      |      |      |      |      |      | Mute |       | Stop |      |   #  |   "  | "~"  | "`"  |  <>| |
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
  * |      |      |      |      |           |        |       | Bksp   |           |      |      |      |      |
  * `------------------------------------------------'       `------------------------------------------------'
@@ -162,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,------------------------------------------------.       ,------------------------------------------------.
  * |      |CMD+1 |CMD+2 |CMD+3 |CMD+4 |CMD+5 |      |       |      |CMD+6 |CMD+7 |CMD+8 |CMD+9 |CMD+0 |LCKOSX|
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |       |      |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |      |       |      | Left | Down |  Up  |Right |      |      |
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |       |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
@@ -171,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_SPACE] = LAYOUT(
     _______, LGUI(KC_1), LGUI(KC_2), LGUI(KC_3), LGUI(KC_4), LGUI(KC_5), _______,   /*|*/       _______, LGUI(KC_6), LGUI(KC_7), LGUI(KC_8),  LGUI(KC_9), LGUI(KC_0), LOCKSCREEN,
-    _______, _______, _______, _______, _______, _______, _______,                  /*|*/       _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______,                  /*|*/       _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______,
     _______, _______, _______, _______, _______, _______, _______,                  /*|*/       _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______,                           /*|*/                _______, _______, _______, _______, _______, _______
   ),
