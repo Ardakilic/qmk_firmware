@@ -26,8 +26,8 @@ enum ergotravel_layers {
   _NUMPAD
 };
 
-//KC_NONUS_BSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
-//KC_GRV (~ `) is equivalent to [<>|] key in Turkish keyboards.
+// KC_NONUS_BSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
+// KC_GRV (~ `) is equivalent to [<>|] key in Turkish keyboards.
 // KC_SCLN is Turkish s [şŞ] key
 // KC_QUOT is Turkish i [iİ] key
 // KC_COMM is Turkish o [öÖ] key
@@ -44,7 +44,7 @@ enum ergotravel_layers {
 #define BACKTICK RALT(KC_BSLS)
 #define TILDE RALT(KC_RBRC)
 #define NUMBER_SIGN RALT(KC_3)
-#define AT_SIGN LALT(KC_Q)
+#define AT_SIGN RALT(KC_Q)
 #define LOCKSCREEN LCTL(LSFT(KC_POWER)) // Screen Lock shortcut for OSX
 
 /* 
@@ -95,7 +95,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ||Ctrl |Sda|<>| Alt  |  OS  |  Lower|,  | Space* |       |Enter   |  "|Raise  | Left | Down |  Up  |Right |
  * `------------------------------------------------'       `------------------------------------------------'
  */
-
   [_QWERTY] = LAYOUT(
     KC_TAB, KC_Q,KC_W, KC_E, KC_R, KC_T, KC_GRV,                   /*|*/         KC_AT, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,
     LT(_NUMPAD, KC_ESC),KC_A,KC_S,KC_D,KC_F,KC_G,AT_SIGN,           /*|*/         DOLLAR_SIGN, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
@@ -111,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
  * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | Del  |       | Bksp |      |  "$" |  "{" |  "}" |  <   |  ">" |
  * |------+------+------+------+------+------+------|       |------+------+------+------+------+------+------|
- * |      |      |      |      |           |   Bksp |       | Del    |           |  "[" |  "]" |  '   |  "   |
+ * |RGBMod|      |      |      |           |   Bksp |       | Del    |           |  "[" |  "]" |  '   |  "   |
  * `------------------------------------------------'       `------------------------------------------------'
  */
 
@@ -119,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_HOME,    /*|*/        KC_PGUP, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
     KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_F6,    KC_END ,    /*|*/        KC_PGDN, _______, KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_EQL,
     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,     /*|*/        KC_BSPC, _______,DOLLAR_SIGN, CURLY_OPEN, CURLY_CLOSE, KC_GRV, LSFT(KC_GRV),
-    _______, _______, _______, _______, _______, KC_BSPC,             /*|*/        KC_DEL, _______, SQUARE_OPEN, SQUARE_CLOSE, LSFT(KC_2), KC_NONUS_BSLASH 
+    RGB_MOD, _______, _______, _______, _______, KC_BSPC,             /*|*/        KC_DEL, _______, SQUARE_OPEN, SQUARE_CLOSE, LSFT(KC_2), KC_NONUS_BSLASH 
   ),
 
 
@@ -134,11 +133,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |           |        |       | Bksp   |           |      |      |      |      |
  * `------------------------------------------------'       `------------------------------------------------'
  */
+
+
+
   [_RAISE] = LAYOUT(
     KC_GRV,  KC_1, KC_2, KC_3, KC_4, KC_5, KC_VOLU,                   /*|*/       KC_MPLY, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSPC,
-    KC_DEL, _______, _______, _______,_______, _______,  KC_VOLD,     /*|*/       KC_MNXT, KC_MPRV, KC_MINS, KC_EQL, BACKSLASH, VERTICAL_PIPE, KC_BSLS,
-    _______, _______, _______, _______,_______, _______,  KC_MUTE,    /*|*/       KC_MSTP, _______, NUMBER_SIGN, KC_NUBS, TILDE, BACKTICK, KC_GRV,
-    _______, _______, _______, _______, _______, _______,             /*|*/           KC_BSPC, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    KC_DEL, RGB_MOD, RGB_VAI, RGB_SAI, RGB_HUI, _______,  KC_VOLD,    /*|*/       KC_MNXT, KC_MPRV, KC_MINS, KC_EQL, BACKSLASH, VERTICAL_PIPE, KC_BSLS,
+    _______, RGB_RMOD, RGB_VAD, RGB_SAD, RGB_HUD, _______,  KC_MUTE,  /*|*/       KC_MSTP, _______, NUMBER_SIGN, KC_NUBS, TILDE, BACKTICK, KC_GRV,
+    _______, RGB_TOG, BL_STEP, _______, _______, _______,             /*|*/           KC_BSPC, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
   ),
 
 /* Soda
