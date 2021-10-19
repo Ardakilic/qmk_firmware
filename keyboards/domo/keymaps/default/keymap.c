@@ -34,7 +34,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return true;
 }
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 void oled_task_user(void) {
     oled_write_P(PSTR("Hello World!\n"), false);  // Renders a static text
     oled_scroll_left();  // Turns on scrolling
