@@ -4,5 +4,5 @@
 To install, just run:
 
 ```bash
-make planck/rev6:ardakilic:dfu-uti
+make planck/rev6:ardakilic:dfu-util
 ```
