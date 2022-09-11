@@ -33,3 +33,31 @@
 // Enable if you want to 
 // #define PIMORONI_TRACKBALL_INVERT_X
 // #define PIMORONI_TRACKBALL_INVERT_Y
+// #define POINTING_DEVICE_ROTATION_90
+// #define SPLIT_POINTING_ENABLE
+// #define POINTING_DEVICE_RIGHT
+
+// trackball smoothing start
+// https://github.com/qmk/qmk_firmware/blob/master/keyboards/sofle/keymaps/foureight84/config.h
+// #define POINTING_DEVICE_TASK_THROTTLE_MS 8
+// Trackball smoothing
+
+
+/* 
+
+https://www.reddit.com/r/ErgoMechKeyboards/comments/qx7oqg/how_do_you_get_smoother_mouse_keys_with_qmkvia/
+https://github.com/manna-harbour/miryoku_qmk/blob/bdb9fd81e8aa2afb3882f7c0f6ae2d3ba448ac93/users/manna-harbour_miryoku/config.h#L23-L33
+
+// Mouse key speed and acceleration.
+#undef MOUSEKEY_DELAY
+#define MOUSEKEY_DELAY          0
+#undef MOUSEKEY_INTERVAL
+#define MOUSEKEY_INTERVAL       16
+#undef MOUSEKEY_WHEEL_DELAY
+#define MOUSEKEY_WHEEL_DELAY    0
+#undef MOUSEKEY_MAX_SPEED
+#define MOUSEKEY_MAX_SPEED      6
+#undef MOUSEKEY_TIME_TO_MAX
+#define MOUSEKEY_TIME_TO_MAX    64
+
+*/
