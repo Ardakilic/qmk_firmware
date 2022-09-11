@@ -16,6 +16,11 @@
 
 #pragma once
 
+// smooth scrolling calculation stuff
+#include <string.h>
+#include "lib/lib8tion/lib8tion.h"
+// smooth scrolling caluclation stuff
+
 #define USE_I2C
 
 #undef MATRIX_ROW_PINS
@@ -46,7 +51,7 @@
 /* 
 
 https://www.reddit.com/r/ErgoMechKeyboards/comments/qx7oqg/how_do_you_get_smoother_mouse_keys_with_qmkvia/
-https://github.com/manna-harbour/miryoku_qmk/blob/bdb9fd81e8aa2afb3882f7c0f6ae2d3ba448ac93/users/manna-harbour_miryoku/config.h#L23-L33
+https://github.com/manna-harbour/miryoku_qmk/blob/bdb9fd81e8aa2afb3882f7c0f6ae2d3ba448ac93/users/manna-harbour_miryoku/config.h#L23-L33 
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
