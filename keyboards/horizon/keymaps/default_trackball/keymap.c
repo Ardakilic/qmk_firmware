@@ -98,6 +98,63 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 // Smooth mousescroll  movement END
 
 
+// RGB LED on Trackball
+#define PIMORONI_TRACKBALL_ENABLE_TESTING
+void keyboard_post_init_user(void) {
+#ifdef PIMORONI_TRACKBALL_ENABLE_TESTING
+    trackball_set_rgbw(0,0,0,80);
+#endif
+}
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record){
+  switch (keycode){
+#ifdef PIMORONI_TRACKBALL_ENABLE_TESTING
+  case BALL_LC:
+     record->event.pressed?register_code(KC_BTN1):unregister_code(KC_BTN1);
+     break;
+  case BALL_SCR:
+    if(record->event.pressed){
+      trackball_set_scrolling(true);
+    } else{
+      trackball_set_scrolling(false);
+    }
+    break;
+#endif
+  default:
+#ifdef OLED_ENABLE
+    if (record->event.pressed) {
+      set_keylog(keycode, record);
+    }
+#endif
+    break;
+  }
+  return true;
+}
+
+
+#ifdef PIMORONI_TRACKBALL_ENABLE_TESTING
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+    case _BASE:
+        trackball_set_rgbw(0,0,0,80);
+        break;
+    case _SYMBOL:
+        trackball_set_rgbw(0,153,95,0);
+        break;
+    case _FUNCTION:
+        trackball_set_rgbw(153,113,0,0);
+        break;
+    default: //  for any other layers, or the default layer
+        trackball_set_rgbw(0,0,0,80);
+        break;
+    }
+  return state;
+}
+#endif
+// RGB Led on Trackball
+
+
 // LAYERS
 
 enum layer_names {
