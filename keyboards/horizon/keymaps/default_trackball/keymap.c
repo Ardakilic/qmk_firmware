@@ -16,13 +16,23 @@
 
 #include QMK_KEYBOARD_H
 
-void matrix_init_kb(void) {
-    // setPinOutput(D5);
-    // writePinHigh(D5);
 
-    // setPinOutput(B0);
-    // writePinHigh(B0);
+enum custom_keycodes {
+  BALL_HUI = SAFE_RANGE, //cycles hue
+  BALL_WHT,              //cycles white
+  BALL_DEC,              //decreased color
+  BALL_SCR,              //scrolls
+  BALL_NCL,              //left click
+  BALL_RCL,              //right click
+  BALL_MCL,              //middle click
 };
+
+enum layer_names {
+    _BASE,
+    _SYMBOL,
+    _FUNCTION
+};
+
 
 #ifdef PIMORONI_TRACKBALL_ENABLE
 
@@ -42,7 +52,7 @@ void keyboard_post_init_keymap(void) {
 }
 // void shutdown_keymap(void) { trackball_set_rgbw(RGB_RED, 0x00); }
 
-static bool mouse_button_one, trackball_button_one;
+// static bool mouse_button_one, trackball_button_one;
 
 void trackball_register_button(bool pressed, enum mouse_buttons button){
     report_mouse_t currentReport = pointing_device_get_report();
@@ -55,6 +65,7 @@ void trackball_register_button(bool pressed, enum mouse_buttons button){
 }
 #endif
 
+/*
 // Smooth mouse scroll movement START
 // https://github.com/qmk/qmk_firmware/blob/master/keyboards/sofle/keymaps/foureight84/keymap.c
 static uint32_t       last_mouse_activity = 0;
@@ -96,73 +107,137 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     return smooth_mouse_movement(mouse_report);
 }
 // Smooth mousescroll  movement END
-
+*/
 
 // RGB LED on Trackball
-#define PIMORONI_TRACKBALL_ENABLE_TESTING
 void keyboard_post_init_user(void) {
-#ifdef PIMORONI_TRACKBALL_ENABLE_TESTING
-    trackball_set_rgbw(0,0,0,80);
-#endif
+    pimoroni_trackball_set_rgbw(0,0,0,80);
 }
 
 
+
+uint8_t white = 0;
+uint8_t red = 255;
+uint8_t green = 0;
+uint8_t blue = 0;
+
+bool set_scrolling = false;
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    if (set_scrolling) {
+        mouse_report.h = mouse_report.x;
+        mouse_report.v = mouse_report.y;
+        mouse_report.x = mouse_report.y = 0; 
+    }
+    return mouse_report;
+}
+
+void ball_increase_hue(void){
+      if(red!=255&&green!=255&&blue!=255){
+        red =255;
+      }
+      if (red==255&&green<255&&blue==0){
+       green += 15;
+      } else if(green==255&&blue==0&&red>0){
+        red-=15;
+      } else if(red==0&&blue<255&&green==255){
+        blue+=15;
+      } else if(blue==255&&green>0&&red==0){
+        green -= 15;
+      } else if(green == 0&&blue==255&&red<255){
+        red +=15;
+      } else if(green ==0&&blue>0&&red==255){
+        blue -=15;
+      }
+      pimoroni_trackball_set_rgbw(red,green,blue,white);
+}
+
+void decrease_color(void){
+  if (green>0){
+    green-=15;
+  }
+  if (red>0){
+    red-=15;
+  }
+  if (blue>0){
+    blue-=15;
+  }
+  pimoroni_trackball_set_rgbw(red,green,blue,white);
+}
+
+void cycle_white(void){
+  if (white<255){
+    white +=15;
+  } else{
+    white=0;
+  }
+  pimoroni_trackball_set_rgbw(red,green,blue,white);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode){
-#ifdef PIMORONI_TRACKBALL_ENABLE_TESTING
-  case BALL_LC:
+  case  BALL_HUI:
+    if(record->event.pressed){
+      ball_increase_hue();
+    }
+    break;
+
+  case BALL_WHT:
+    if(record-> event.pressed){
+      cycle_white();
+    }
+    break;
+
+  case BALL_DEC:
+   if(record-> event.pressed){
+      decrease_color();
+    }
+    break;
+
+  case BALL_SCR:
+   if(record->event.pressed){
+     set_scrolling = true;
+   } else{
+     set_scrolling = false;
+   }
+   break;
+
+  case BALL_NCL:
      record->event.pressed?register_code(KC_BTN1):unregister_code(KC_BTN1);
      break;
-  case BALL_SCR:
-    if(record->event.pressed){
-      trackball_set_scrolling(true);
-    } else{
-      trackball_set_scrolling(false);
-    }
-    break;
-#endif
-  default:
-#ifdef OLED_ENABLE
-    if (record->event.pressed) {
-      set_keylog(keycode, record);
-    }
-#endif
-    break;
+  case BALL_RCL:
+      record->event.pressed?register_code(KC_BTN2):unregister_code(KC_BTN2);
+      break;
+  case BALL_MCL:
+      record->event.pressed?register_code(KC_BTN3):unregister_code(KC_BTN3);
+      break;
   }
   return true;
 }
 
 
-#ifdef PIMORONI_TRACKBALL_ENABLE_TESTING
+
+
 layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
     case _BASE:
-        trackball_set_rgbw(0,0,0,80);
+        pimoroni_trackball_set_rgbw(0,0,0,80);
         break;
     case _SYMBOL:
-        trackball_set_rgbw(0,153,95,0);
+        pimoroni_trackball_set_rgbw(0,153,95,0);
         break;
     case _FUNCTION:
-        trackball_set_rgbw(153,113,0,0);
+        pimoroni_trackball_set_rgbw(153,113,0,0);
         break;
     default: //  for any other layers, or the default layer
-        trackball_set_rgbw(0,0,0,80);
+        pimoroni_trackball_set_rgbw(0,0,0,80);
         break;
     }
   return state;
 }
-#endif
 // RGB Led on Trackball
 
 
 // LAYERS
-
-enum layer_names {
-    _BASE,
-    _SYMBOL,
-    _FUNCTION
-};
-
 #define MO_SYMB MO(_SYMBOL)
 #define MO_FUNC MO(_FUNCTION)
 
@@ -183,6 +258,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_PSCR,                   KC_SLCK, KC_HOME, KC_PGDN, KC_PGUP, KC_END , _______,
         _______, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_INS ,                   KC_CLCK, KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______,
         _______, KC_F9  , KC_F10 , KC_F11 , KC_F12 , _______, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, KC_PAUS, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+        BALL_SCR, BALL_HUI, BALL_WHT, BALL_DEC, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     )
 };
