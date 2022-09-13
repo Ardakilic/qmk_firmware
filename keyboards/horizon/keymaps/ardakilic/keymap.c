@@ -18,10 +18,7 @@
 
 
 enum custom_keycodes {
-  BALL_HUI = SAFE_RANGE, //cycles hue
-  BALL_WHT,              //cycles white
-  BALL_DEC,              //decreased color
-  BALL_SCR,              //scrolls
+  BALL_SCR = SAFE_RANGE, //scrolls
   BALL_NCL,              //left click
   BALL_RCL,              //right click
   BALL_MCL,              //middle click
@@ -36,7 +33,6 @@ enum horizon_layers {
   _SODA,
   _NUMPAD
 };
-
 
 
 // KC_NONUS_BSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
@@ -95,37 +91,6 @@ const uint32_t PROGMEM unicode_map[] = {
 */
 
 
-#ifdef PIMORONI_TRACKBALL_ENABLE
-
-void run_trackball_cleanup(void) {
-    // if (trackball_is_scrolling()) {
-    //     trackball_set_rgbw(RGB_CYAN, 0x00);
-    // } else if (trackball_get_precision() != 1.0) {
-    //     trackball_set_rgbw(RGB_GREEN, 0x00);
-    // } else {
-    // trackball_set_rgbw(RGB_MAGENTA, 0x00);
-    // }
-}
-
-void keyboard_post_init_keymap(void) {
-    // trackball_set_precision(1.5);*i
-    // trackball_set_rgbw(RGB_MAGENTA, 0x00);
-}
-// void shutdown_keymap(void) { trackball_set_rgbw(RGB_RED, 0x00); }
-
-// static bool mouse_button_one, trackball_button_one;
-
-void trackball_register_button(bool pressed, enum mouse_buttons button){
-    report_mouse_t currentReport = pointing_device_get_report();
-    if (pressed) {
-        currentReport.buttons |= button;
-    } else {
-        currentReport.buttons &= ~button;
-    }
-    pointing_device_set_report(currentReport);
-}
-#endif
-
 /*
 // Smooth mouse scroll movement START
 // https://github.com/qmk/qmk_firmware/blob/master/keyboards/sofle/keymaps/foureight84/keymap.c
@@ -170,98 +135,34 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 // Smooth mousescroll  movement END
 */
 
-// RGB LED on Trackball
-void keyboard_post_init_user(void) {
-    pimoroni_trackball_set_rgbw(0,0,0,80);
-}
-
-
-
-uint8_t white = 0;
-uint8_t red = 255;
-uint8_t green = 0;
-uint8_t blue = 0;
-
 bool set_scrolling = false;
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (set_scrolling) {
         mouse_report.h = mouse_report.x;
         mouse_report.v = mouse_report.y;
-        mouse_report.x = mouse_report.y = 0;
+        mouse_report.x = 0;
+        mouse_report.y = 0;
     }
     return mouse_report;
 }
 
-void ball_increase_hue(void){
-      if(red!=255&&green!=255&&blue!=255){
-        red =255;
-      }
-      if (red==255&&green<255&&blue==0){
-       green += 15;
-      } else if(green==255&&blue==0&&red>0){
-        red-=15;
-      } else if(red==0&&blue<255&&green==255){
-        blue+=15;
-      } else if(blue==255&&green>0&&red==0){
-        green -= 15;
-      } else if(green == 0&&blue==255&&red<255){
-        red +=15;
-      } else if(green ==0&&blue>0&&red==255){
-        blue -=15;
-      }
-      pimoroni_trackball_set_rgbw(red,green,blue,white);
-}
-
-void decrease_color(void){
-  if (green>0){
-    green-=15;
-  }
-  if (red>0){
-    red-=15;
-  }
-  if (blue>0){
-    blue-=15;
-  }
-  pimoroni_trackball_set_rgbw(red,green,blue,white);
-}
-
-void cycle_white(void){
-  if (white<255){
-    white +=15;
-  } else{
-    white=0;
-  }
-  pimoroni_trackball_set_rgbw(red,green,blue,white);
+void keyboard_post_init_user(void) {
+    // Customise these values to desired behaviour
+    // debug_enable=true;
+    // debug_matrix=true;
+    // debug_keyboard=true;
+    // debug_mouse=true;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode){
-  case  BALL_HUI:
-    if(record->event.pressed){
-      ball_increase_hue();
-    }
-    break;
-
-  case BALL_WHT:
-    if(record-> event.pressed){
-      cycle_white();
-    }
-    break;
-
-  case BALL_DEC:
-   if(record-> event.pressed){
-      decrease_color();
-    }
-    break;
-
-  case BALL_SCR:
-   if(record->event.pressed){
-     set_scrolling = true;
-   } else{
-     set_scrolling = false;
+      case BALL_SCR:
+       if(record->event.pressed) {
+            set_scrolling = !set_scrolling;
+        }
+       break;
    }
-   break;
-
+/*   
   case BALL_NCL:
      record->event.pressed?register_code(KC_BTN1):unregister_code(KC_BTN1);
      break;
@@ -272,50 +173,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       record->event.pressed?register_code(KC_BTN3):unregister_code(KC_BTN3);
       break;
   }
+  */
   return true;
 }
 
-
-
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    // Some color codes are from: https://flaviocopes.com/rgb-color-codes/
-    switch (get_highest_layer(state)) {
-    case _QWERTY:
-        pimoroni_trackball_set_rgbw(0,0,0,80);
-        break;
-    case _LOWER:
-        pimoroni_trackball_set_rgbw(0,153,95,0); // deep blue
-        break;
-    case _RAISE:
-        pimoroni_trackball_set_rgbw(0,255,127,0); // Spring Green
-        break;
-    case _SODA:
-        pimoroni_trackball_set_rgbw(255,0,255,0); // Magenta / Fuchisa
-        break;
-    case _SPACE:
-        pimoroni_trackball_set_rgbw(255,20,147,0); // Deep Pink
-        break;
-    case _NUMPAD:
-        pimoroni_trackball_set_rgbw(123,104,238,0); // medium slate blue
-        break;
-    case _ADJUST:
-        pimoroni_trackball_set_rgbw(255,0,0,0); // Red
-        break;
-
-    default: //  for any other layers, or the default layer
-        pimoroni_trackball_set_rgbw(0,0,0,80);
-        break;
-    }
-  state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-  return state;
-}
-// RGB Led on Trackball
-
-
-// LAYERS
-#define MO_SYMB MO(_SYMBOL)
-#define MO_FUNC MO(_FUNCTION)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -327,14 +188,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
  * |SftCps|   Z  |   X  |   C  |   V  |   B  |LftClk|LftClk|   N  |   M  |   Ö  |   Ç  |   .  |SftEtr|
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |Sda|<>| Ctrl | Alt  |  OS  |Lowr|,|Space*|MdlClk|RgtClk| Bksp |Rise|"| Left | Down |  Up  |Right |
+ * |Sda|<>| Ctrl | Alt  |  OS  |Lowr|,|Space*|Scroll|RgtClk| Bksp |Rise|"| Left | Down |  Up  |Right |
  * `-------------------------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT(
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     LT(_NUMPAD, KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     LSFT_T(KC_CAPS), KC_Z,  KC_X,    KC_C,    KC_V,    KC_B,    KC_MS_BTN1, KC_MS_BTN1,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT /*KC_ENT*/,
-    LT(_SODA, KC_GRV), KC_LCTL, KC_LALT, KC_LGUI, LT(_LOWER, KC_BSLS), LT(_SPACE, KC_SPC), KC_MS_BTN3, KC_MS_BTN2, KC_BSPC, LT(_RAISE, KC_NONUS_BSLASH), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
+    LT(_SODA, KC_GRV), KC_LCTL, KC_LALT, KC_LGUI, LT(_LOWER, KC_BSLS), LT(_SPACE, KC_SPC), BALL_SCR, KC_MS_BTN2, KC_BSPC, LT(_RAISE, KC_NONUS_BSLASH), KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
 ),
 
 /* Lower
@@ -345,14 +206,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F7  |  F8  |  F9  |  F10 |  F11 |LftClk|LftClk|  F12 |  "$" |  "{" |  "}" |  <   |  ">" |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |MdlClk|RgtClk|      |      |  "[" |  "]" |  '   |   "  |
+ * |      |      |      |      |      |      |Scroll|RgtClk|      |      |  "[" |  "]" |  '   |   "  |
  * `-------------------------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT(
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LBRC, KC_RBRC, KC_EQL,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_MS_BTN1, KC_MS_BTN1,  KC_F12,  DOLLAR_SIGN, CURLY_OPEN, CURLY_CLOSE, KC_GRV, LSFT(KC_GRV),
-    _______, _______, _______, _______, _______, _______, KC_MS_BTN3, KC_MS_BTN2, _______, _______,   SQUARE_OPEN, SQUARE_CLOSE, LSFT(KC_2), KC_NONUS_BSLASH
+    _______, _______, _______, _______, _______, _______, BALL_SCR, KC_MS_BTN2, _______, _______,   SQUARE_OPEN, SQUARE_CLOSE, LSFT(KC_2), KC_NONUS_BSLASH
 ),
 
 
@@ -364,32 +225,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F7  |  F8  |  F9  |  F10 |  F11 |LftClk|LftClk|  F12 |   #  |   "  | "~"  | "`"  |  <>| |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |MdlClk|RgtClk|      |      | Next | Vol- | Vol+ | Play |
+ * |      |      |      |      |      |      |Scroll|RgtClk|      |      | Next | Vol- | Vol+ | Play |
  * `-------------------------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT(
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_MINS, KC_EQL,  BACKSLASH, VERTICAL_PIPE, KC_BSLS,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_MS_BTN1, KC_MS_BTN1,  KC_F12,  NUMBER_SIGN, KC_NUBS, TILDE, BACKTICK, KC_GRV,
-    _______, _______, _______, _______, _______, _______, KC_MS_BTN3, KC_MS_BTN2,_______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    _______, _______, _______, _______, _______, _______, BALL_SCR, KC_MS_BTN2,_______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
-/* Soda Layer
+/* Soda Layer. Adjust and other stuff
  * ,-------------------------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |    TRACK    |      |      |  Up  |      |      |      |
+ * |EepRST| Reset| Debug|      |      |      |    TRACK    |      |      |  Up  |      |      |      |
  * |------+------+------+------+------+------+     BALL    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |             |      | Left | Down |Right |      | Mute |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |LftClk|LftClk|      |      | Next | Vol- | Vol+ | Play |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |MdlClk|RgtClk|      |      |      |      |Brght▼|Brght▲|
+ * |      |      |      |      |      |      |Scroll|RgtClk|      |      |      |      |Brght▼|Brght▲|
  * `-------------------------------------------------------------------------------------------------'
  */
 [_SODA] = LAYOUT(
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_UP, _______, _______, _______,
+    EEP_RST, RESET,   DEBUG, _______, _______, _______, _______, _______, KC_UP, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_MUTE,
     _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_BTN1, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY,
-    _______, _______, _______, _______, _______, _______, KC_MS_BTN3, KC_MS_BTN2, _______, _______, _______, _______, KC_BRMD, KC_BRMU
+    _______, _______, _______, _______, _______, _______, BALL_SCR, KC_MS_BTN2, _______, _______, _______, _______, KC_BRMD, KC_BRMU
 ),
 
 /* Space Layer (Space Bar Layer Tap)
@@ -400,14 +261,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |LftClk|LftClk|      |      | Left | Down |Right |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |MdlClk|RgtClk|      |      |      |      |Brght▼|Brght▲|
+ * |      |      |      |      |      |      |Scroll|RgtClk|      |      |      |      |Brght▼|Brght▲|
  * `-------------------------------------------------------------------------------------------------'
  */
 [_SPACE] = LAYOUT(
     _______, LGUI(KC_1), LGUI(KC_2), LGUI(KC_3), LGUI(KC_4), LGUI(KC_5), LGUI(KC_6), LGUI(KC_7), LGUI(KC_8),  LGUI(KC_9), LGUI(KC_0), LOCKSCREEN,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_UP,  _______, _______,
     _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_BTN1, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______,
-    _______, _______, _______, _______, _______, _______, KC_MS_BTN3, KC_MS_BTN2, _______, _______, _______, _______, KC_BRMD, KC_BRMU
+    _______, _______, _______, _______, _______, _______, BALL_SCR, KC_MS_BTN2, _______, _______, _______, _______, KC_BRMD, KC_BRMU
 ),
 
 
@@ -420,33 +281,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |LftClk|LftClk| Enter|   1  |   2  |   3  |   +  |   /  |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |MdlClk|RgtClk| Bkspc|   0  |   0  |   .  |   ,  |   =  |
+ * |      |      |      |      |      |      |Scroll|RgtClk| Bkspc|   0  |   0  |   .  |   ,  |   =  |
  * `-------------------------------------------------------------------------------------------------'
  */
 [_NUMPAD] = LAYOUT(
     _______, _______, _______, _______, _______, _______, KC_SPC, KC_P7, KC_P8, KC_P9, KC_PMNS, KC_BSPC,
     _______, _______, _______, _______, _______, _______, KC_PENT, KC_P4, KC_P5, KC_P6, KC_PPLS, KC_PAST,
     _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_BTN1, KC_PENT, KC_P1, KC_P2, KC_P3, KC_PPLS, KC_PSLS,
-    _______, _______, _______, _______, _______, _______, KC_MS_BTN3, KC_MS_BTN2, KC_BSPC,  KC_P0, KC_P0, KC_SLSH, KC_PDOT, KC_PEQL
+    _______, _______, _______, _______, _______, _______, BALL_SCR, KC_MS_BTN2, KC_BSPC,  KC_P0, KC_P0, KC_SLSH, KC_PDOT, KC_PEQL
 ),
-
-/* Adjust (Lower + Raise)
- *
- * ,-------------------------------------------------------------------------------------------------.
- * |EepRST| Reset| Debug|      |      |      |    TRACK    |      |      |      |      |      |  Del |
- * |------+------+------+------+------+------+     BALL    |------+------+------+------+------+------|
- * | BlScr| BlHui| BlWht| BlDec|      |      |             |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |LftClk|LftClk|      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |MdlClk|RgtClk|      |      |      |      |      |      |
- * `-------------------------------------------------------------------------------------------------'
- */
-[_ADJUST] = LAYOUT(
-    EEP_RST, RESET,   DEBUG,   _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
-    BALL_SCR, BALL_HUI, BALL_WHT, BALL_DEC, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_BTN1, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, KC_MS_BTN3, KC_MS_BTN2,_______, _______, _______, _______, _______, _______
-)
 
 };
