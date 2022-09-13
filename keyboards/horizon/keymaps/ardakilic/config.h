@@ -21,8 +21,6 @@
 // #include "lib/lib8tion/lib8tion.h"
 // smooth scrolling caluclation stuff
 
-#define USE_I2C
-
 #undef MATRIX_ROW_PINS
 #undef MATRIX_COL_PINS
 
@@ -45,7 +43,7 @@
 // trackball smoothing start
 // https://github.com/qmk/qmk_firmware/blob/master/keyboards/sofle/keymaps/foureight84/config.h
 // #define POINTING_DEVICE_TASK_THROTTLE_MS 8
-// Trackball smoothing
+// Trackball smoothing end
 
 
 /* 
