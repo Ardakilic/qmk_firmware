@@ -17,7 +17,7 @@
 #include QMK_KEYBOARD_H
 
 
-// KC_NONUS_BSLASH (\|) is equivalent to [<>|] key in Turkish Windows keyboards.
+// KC_NONUS_BACKSLASH (\|) is equivalent to [<>|] key in Turkish Windows keyboards.
 // KC_GRV (~ `) is equivalent to ["é] key in Turkish Windows keyboards.
 // KC_SCLN is Turkish s [şŞ] key
 // KC_QUOT is Turkish i [iİ] key
@@ -35,7 +35,7 @@
 #define BACKTICK RALT(KC_BSLS)
 #define TILDE RALT(KC_RBRC)
 #define NUMBER_SIGN RALT(KC_3)
-#define LOCKSCREEN LCTL(LSFT(KC_POWER)) // Screen Lock shortcut for OSX
+#define LOCKSCREEN LCTL(LSFT(KC_PWR)) // Screen Lock shortcut for OSX
 
 /* 
 // Unicode Turkish characters, in case it's needed
@@ -104,8 +104,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,KC_1,KC_2,KC_3,KC_4,KC_5,                    /*|*/   KC_6,KC_7,KC_8,KC_9,KC_0,KC_BSPC,
     KC_TAB,KC_Q,KC_W,KC_E,KC_R,KC_T,                    /*|*/   KC_Y,KC_U,KC_I,KC_O,KC_P,KC_DEL,
     LT(_NUMPAD, KC_ESC),KC_A,KC_S,KC_D,KC_F,KC_G,       /*|*/   KC_H,KC_J,KC_K,KC_L,KC_SCLN,KC_QUOT,
-    KC_LSFT,KC_Z,KC_X,KC_C,KC_V,KC_B,           /*|*/   KC_N,KC_M,KC_COMM,KC_DOT,KC_SLSH,KC_SFTENT,
-    KC_LCTL,LT(_ADJUST,KC_NONUS_BSLASH),KC_LGUI,KC_LALT,LT(_LOWER,KC_BSLS),KC_SPC, /*|*/ KC_SPC,KC_RALT,KC_LEFT,KC_DOWN,KC_UP,KC_RGHT
+    KC_LSFT,KC_Z,KC_X,KC_C,KC_V,KC_B,           /*|*/   KC_N,KC_M,KC_COMM,KC_DOT,KC_SLSH,SC_SENT,
+    KC_LCTL,LT(_ADJUST,KC_NONUS_BACKSLASH),KC_LGUI,KC_LALT,LT(_LOWER,KC_BSLS),KC_SPC, /*|*/ KC_SPC,KC_RALT,KC_LEFT,KC_DOWN,KC_UP,KC_RGHT
 ),
 
 
@@ -126,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,KC_F1,KC_F2,KC_F3,KC_F4,KC_F5,              /*|*/   _______,_______,BACKSLASH,VERTICAL_PIPE,KC_MINS,KC_EQL,
     _______,KC_F6,KC_F7,KC_F8,KC_F9,KC_F10,             /*|*/   _______,NUMBER_SIGN,KC_GRV,RALT(KC_LBRC),RALT(KC_RBRC),LSFT(KC_0),
     _______,KC_F11,KC_F12,_______,_______,_______,      /*|*/   KC_MINS,KC_UNDS,BACKTICK,KC_LBRC,KC_RBRC,KC_PLUS,
-    _______,_______,_______,_______,_______,_______,    /*|*/   _______,DOLLAR_SIGN,CURLY_OPEN,CURLY_CLOSE,KC_NONUS_BSLASH,LSFT(KC_NONUS_BSLASH),
+    _______,_______,_______,_______,_______,_______,    /*|*/   _______,DOLLAR_SIGN,CURLY_OPEN,CURLY_CLOSE,KC_NONUS_BACKSLASH,LSFT(KC_NONUS_BACKSLASH),
     _______,_______,_______,_______,_______,KC_ENT,     /*|*/   KC_BSPC,_______,SQUARE_OPEN,SQUARE_CLOSE,LSFT(KC_2),KC_GRV
 ),
 
@@ -146,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------' `-----------------------------------------'
  */
 [_NUMPAD] = LAYOUT_ortho_5x12(
-    KC_GRV,_______,_______,KC_BTN3,_______,_______,     /*|*/   _______,KC_NLCK,KC_PSLS,KC_PAST,KC_PMNS,KC_BSPC,
+    KC_GRV,_______,_______,KC_BTN3,_______,_______,     /*|*/   _______,KC_NUM,KC_PSLS,KC_PAST,KC_PMNS,KC_BSPC,
     _______,KC_ACL0,KC_BTN1,KC_MS_U,KC_BTN2,KC_WH_U,    /*|*/   _______,KC_P7,KC_P8,KC_P9,KC_PPLS,KC_PEQL,
     _______,KC_ACL1,KC_MS_L,KC_MS_D,KC_MS_R,KC_WH_D,    /*|*/   _______,KC_P4,KC_P5,KC_P6,KC_PPLS,KC_PDOT,
     _______,KC_ACL2,KC_VOLU,KC_MPRV,KC_MPLY,KC_MNXT,    /*|*/   _______,KC_P1,KC_P2,KC_P3,KC_PENT,_______,
@@ -167,7 +167,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------' `-----------------------------------------'
  */
 [_ADJUST] = LAYOUT_ortho_5x12(
-    EEP_RST,RESET,_______,_______,_______,_______,      /*|*/   TG(_MAC),_______,_______,_______,_______,LOCKSCREEN,
+    EE_CLR,QK_BOOT,_______,_______,_______,_______,     /*|*/   TG(_MAC),_______,_______,_______,_______,LOCKSCREEN,
     _______,_______,_______,_______,_______,_______,    /*|*/   _______,_______,_______,_______,_______,_______,
     _______,_______,_______,_______,_______,_______,    /*|*/   _______,_______,_______,_______,_______,_______,
     KC_CAPS,_______,_______,_______,_______,_______,    /*|*/   _______,_______,_______,_______,_______,_______,
