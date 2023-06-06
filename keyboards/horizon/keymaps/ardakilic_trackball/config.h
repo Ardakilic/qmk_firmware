@@ -32,6 +32,8 @@
 // #define MATRIX_ROW_PINS { D3, D2, D1, F4 }
 // #define MATRIX_COL_PINS { F5, F6, F7, B1, B3, B2, B6, B5, B4, E6, D7, C6, D4, D0 }
 
+// fix macOS Wakeup issue
+#define USB_SUSPEND_WAKEUP_DELAY 200
 
 // Enable if you want to 
 // #define PIMORONI_TRACKBALL_INVERT_X
@@ -42,17 +44,16 @@
 
 // trackball smoothing start
 // https://github.com/qmk/qmk_firmware/blob/master/keyboards/sofle/keymaps/foureight84/config.h
-// #define POINTING_DEVICE_TASK_THROTTLE_MS 8
+#define POINTING_DEVICE_TASK_THROTTLE_MS 8
 // Trackball smoothing end
 
 
 /* 
-
 https://www.reddit.com/r/ErgoMechKeyboards/comments/qx7oqg/how_do_you_get_smoother_mouse_keys_with_qmkvia/
 https://www.reddit.com/r/olkb/comments/72u8ou/qmk_mouse_keys_rock/
 https://github.com/manna-harbour/miryoku_qmk/blob/bdb9fd81e8aa2afb3882f7c0f6ae2d3ba448ac93/users/manna-harbour_miryoku/config.h#L23-L33 
 https://github.com/qmk/qmk_firmware/blob/master/keyboards/draculad/keymaps/pimoroni/keymap.c
-
+*/
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY          0
@@ -64,5 +65,3 @@ https://github.com/qmk/qmk_firmware/blob/master/keyboards/draculad/keymaps/pimor
 #define MOUSEKEY_MAX_SPEED      6
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    64
-
-*/
