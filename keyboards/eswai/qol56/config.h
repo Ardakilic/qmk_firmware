@@ -17,15 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x0000
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    eswai
-#define PRODUCT         QOL56
-#define DESCRIPTION     14x4 Quasi-Ortholinear keyboard
 
 #define USB_MAX_POWER_CONSUMPTION 100
 
@@ -45,7 +39,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #define MATRIX_ROW_PINS { B6, C6, D7, D3, F6, D0, B5, F5 }
 #define MATRIX_COL_PINS { D4, E6, B4, B2, B3, B1, F7 }
-#define UNUSED_PINS
 
 /* COL2ROW, ROW2COL*/
 #define DIODE_DIRECTION COL2ROW
@@ -59,8 +52,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define BACKLIGHT_BREATHING
 // #define BACKLIGHT_LEVELS 3
 
-#define RGB_DI_PIN D2
-#ifdef RGB_DI_PIN
+#define WS2812_DI_PIN D2
+#ifdef WS2812_DI_PIN
   #define RGBLED_NUM 71
   #define RGBLIGHT_HUE_STEP 8
   #define RGBLIGHT_SAT_STEP 8
@@ -83,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCING_DELAY 5
+#define DEBOUNCE 5
 
 /* define if matrix has ghost (lacks anti-ghosting diodes) */
 //#define MATRIX_HAS_GHOST
