@@ -60,6 +60,7 @@ enum trackball_keycodes {
 #define TILDE RALT(KC_RBRC)
 #define NUMBER_SIGN RALT(KC_3)
 #define LOCKSCREEN LCTL(LSFT(KC_PWR)) // Screen Lock shortcut for OSX
+#define AT_SIGN RALT(KC_Q)
 
 // Layer Keys
 #define LAYER_TAB LT(_TAB, KC_TAB)
@@ -183,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                              ╰──────┤       │ ENTER  ├──────╯
 //                                     ╰───────┴────────╯ 
 [_LOWER] = LAYOUT(
-    KC_AT, _______, _______, LSFT(KC_2), KC_NONUS_BACKSLASH,      KC_ASTR, KC_LPRN, KC_UNDS, KC_PLUS, KC_BSPC,      
+    AT_SIGN, _______, _______, LSFT(KC_2), KC_NONUS_BACKSLASH,      KC_ASTR, KC_LPRN, KC_UNDS, KC_PLUS, KC_BSPC,      
     _______, _______, _______, BACKSLASH, VERTICAL_PIPE,            CURLY_OPEN, CURLY_CLOSE, KC_LBRC, KC_RBRC, KC_QUOT, 
     KC_CAPS, _______, _______, KC_GRV, LSFT(KC_GRV),                SQUARE_OPEN, SQUARE_CLOSE, DOLLAR_SIGN, NUMBER_SIGN, KC_EQL,
                                 _______, _______, _______, KC_ENT, KC_GRV, LSFT(KC_GRV)
