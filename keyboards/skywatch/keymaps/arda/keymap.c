@@ -24,19 +24,28 @@ enum skywatch_layers {
     _SPACE,
     _ENT,
     _RAISE,
-    _BSPC
+    _BSPC,
+};
+
+enum macos_keycodes {
+  KC_SPOTLIGHT = SAFE_RANGE,
+  KC_DICTATION,
+  KC_DO_NOT_DISTURB,
+  KC_LOCK_SCREEN,
+
+  NEW_SAFE_RANGE_2,
 };
 
 // pimoroni trackball keycodes
 #ifdef POINTING_DEVICE_ENABLE
 enum trackball_keycodes {
-  BALL_HUI = SAFE_RANGE, //cycles hue
-  BALL_WHT,              //cycles white
-  BALL_DEC,              //decreased color
-  BALL_SCR,              //scrolls
-  BALL_NCL,              //left click
-  BALL_RCL,              //right click
-  BALL_MCL,              //middle click
+  BALL_HUI = NEW_SAFE_RANGE_2,  //cycles hue
+  BALL_WHT,                     //cycles white
+  BALL_DEC,                     //decreased color
+  BALL_SCR,                     //scrolls
+  BALL_NCL,                     //left click
+  BALL_RCL,                     //right click
+  BALL_MCL,                     //middle click
 };
 #endif
 // END pimoroni trackball keycodes
@@ -150,10 +159,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        LAYER_TAB, LAYER_LOWER, LAYER_SPACE, LAYER_ENTER, LAYER_RAISE, LAYER_BACKSPACE
   ),
 
+
 // TAB layer, for configuration
 //         ╭──────┬──────┬──────┬──────╮                ╭──────┬──────┬──────┬──────╮
 //  ╭──────┤ SAT+ │ HUE+ │ ANI+ │ TOG  │                │      │      │      │      ├──────╮
-//  │ BRI+ ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤      │
+//  │ BRI+ ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤LCKOSX│
 //  ├──────┤ SAT- │ HUE- │ ANI- │      │                │BllHui│BllWht│BllDec│      ├──────┤
 //  │ BRI- ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤      │
 //  ├──────┤      │      │      │BllScr│                │REBOOT│ BOOT │EE_CLR│DEBUG ├──────┤
@@ -164,9 +174,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                     ╰───────┴────────╯ 
 
   [_TAB] = LAYOUT(
-    RGB_VAI,   RGB_SAI, RGB_HUI,  RGB_MOD,    RGB_TOG,            _______,  _______,  _______,  _______,     _______,
-    RGB_VAD,   RGB_SAD, RGB_HUD,  RGB_RMOD,   _______,            BALL_HUI, BALL_WHT, BALL_DEC, _______,     _______,     
-    _______,   KC_BTN3, KC_BTN2,  KC_BTN1,    BALL_SCR,           QK_RBT,   QK_BOOT,   EE_CLR,  DB_TOGG,     _______,     
+    RGB_VAI,   RGB_SAI, RGB_HUI,  RGB_MOD,    RGB_TOG,            _______,  _______,  _______,  _______, LOCKSCREEN,
+    RGB_VAD,   RGB_SAD, RGB_HUD,  RGB_RMOD,   _______,            BALL_HUI, BALL_WHT, BALL_DEC, _______, _______,     
+    _______,   KC_BTN3, KC_BTN2,  KC_BTN1,    BALL_SCR,           QK_RBT,   QK_BOOT,   EE_CLR,  DB_TOGG, _______,     
                               _______,   _______,    _______,  _______,   _______,   _______
   ),
 
@@ -194,9 +204,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //         ╭──────┬──────┬──────┬──────╮                ╭──────┬──────┬──────┬──────╮
 //  ╭──────┤  '   |  ^   │  +   │  %   │                │  &   │  /   │  (   │  )   ├──────╮
 //  │  !   ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  =   │
-//  ├──────┤      │      │      |      │                │ LEFT │ DOWN │  UP  │ RIGHT├──────┤
+//  ├──────┤MSNCTL│SPTLGT│DICTTN|LNCHPD│                │ LEFT │ DOWN │  UP  │ RIGHT├──────┤
 //  │      ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤ BKSP │
-//  ├──────┤      |      │      │      │                │LFTCLK│RGTCLK│SCRLCK│MDLCLK├──────┤
+//  ├──────┤      |      │ DND  │LCKOSX│                │LFTCLK│RGTCLK│SCRLCK│MDLCLK├──────┤
 //  │ LSFT ├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤      │
 //  ╰──────╯             │      ├──────╮                ╭──────┤      │             ╰──────╯
 //                       ╰──────┤ LGUI ├───────┬────────┤      ├──────╯
@@ -204,8 +214,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                     ╰───────┴────────╯ 
 [_SPACE] = LAYOUT(
     KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC,                    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,      
-    _______, _______, _______, _______, _______,                 KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_BSPC, 
-    KC_LSFT, _______, _______, _______, _______,                 KC_MS_BTN1, KC_MS_BTN2, BALL_SCR, BALL_MCL, _______,
+    _______, KC_MISSION_CONTROL, KC_SPOTLIGHT, KC_DICTATION, KC_LAUNCHPAD,                 KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_BSPC, 
+    KC_LSFT, _______, _______, KC_DO_NOT_DISTURB, KC_LOCK_SCREEN,                 KC_MS_BTN1, KC_MS_BTN2, BALL_SCR, BALL_MCL, _______,
                                     _______, KC_LGUI, _______, _______, _______, _______
   ),
 
@@ -449,6 +459,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     case BALL_MCL:
         record->event.pressed?register_code(KC_BTN3):unregister_code(KC_BTN3);
         break;
+
+    // macOS custom keycodes,
+    case KC_SPOTLIGHT:
+      if (record->event.pressed) {
+        host_consumer_send(0x221);
+      } else {
+        host_consumer_send(0);
+      }
+      return false;
+      break;
+    case KC_DICTATION:
+      if (record->event.pressed) {
+        host_consumer_send(0xCF);
+      } else {
+        host_consumer_send(0);
+      }
+      return false;
+      break;
+    case KC_DO_NOT_DISTURB:
+      if (record->event.pressed) {
+        host_system_send(0x9B);
+      } else {
+        host_system_send(0);
+      }
+      return false;
+      break;
+    case KC_LOCK_SCREEN:
+      if (record->event.pressed) {
+        host_consumer_send(0x19E);
+      } else {
+        host_consumer_send(0);
+      }
+      return false;
+      break;
+    // END macOS custom keycodes
+
+
     }
   return true;
 }
