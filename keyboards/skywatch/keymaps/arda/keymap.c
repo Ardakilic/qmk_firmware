@@ -33,13 +33,13 @@ enum macos_keycodes {
   KC_DO_NOT_DISTURB,
   KC_LOCK_SCREEN,
 
-  NEW_SAFE_RANGE_2,
+  NEW_SAFE_RANGE_1,
 };
 
 // pimoroni trackball keycodes
 #ifdef POINTING_DEVICE_ENABLE
 enum trackball_keycodes {
-  BALL_HUI = NEW_SAFE_RANGE_2,  //cycles hue
+  BALL_HUI = NEW_SAFE_RANGE_1,  //cycles hue
   BALL_WHT,                     //cycles white
   BALL_DEC,                     //decreased color
   BALL_SCR,                     //scrolls
@@ -95,14 +95,17 @@ enum combos {
   C_TURKISH_I_1,
   C_TURKISH_I_2,
   C_DEL,
-  C_LCMD,
+  C_LCMD_1,
+  C_LCMD_2,
   C_RCMD,
-  C_TAB,
+  C_TAB_1,
+  C_TAB_2,
   C_LCTL,
   C_RCTL,
   C_LALT,
-  C_RALT,
-  C_LEFT_LAYER_ENTER
+  C_RALT_1,
+  C_RALT_2,
+  C_LEFT_LAYER_ENTER,
 };
 
 const uint16_t PROGMEM c_esc_combo[] = {KC_Q, KC_A, COMBO_END};
@@ -111,15 +114,19 @@ const uint16_t PROGMEM c_bsp_combo_2[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM c_turkish_i_combo_1[] = {KC_SCLN, TH_RSFT_DOT, COMBO_END};
 const uint16_t PROGMEM c_turkish_i_combo_2[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM c_del_combo[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM c_lcmd_combo[] = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM c_lcmd_combo_1[] = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM c_lcmd_combo_2[] = {LAYER_TAB, LAYER_LOWER, COMBO_END};
 const uint16_t PROGMEM c_rcmd_combo[] = {KC_K, KC_L, COMBO_END};
-const uint16_t PROGMEM c_tab_combo[] = {KC_A, TH_LSFT_Z, COMBO_END};
+const uint16_t PROGMEM c_tab_combo_1[] = {KC_A, TH_LSFT_Z, COMBO_END};
+const uint16_t PROGMEM c_tab_combo_2[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM c_lctl_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM c_rctl_combo[] = {KC_COMM, KC_DOT, COMBO_END}; // Ö-Ç
 const uint16_t PROGMEM c_lalt_combo[] = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM c_ralt_combo[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM c_ralt_combo_1[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM c_ralt_combo_2[] = {LAYER_RAISE, LAYER_BACKSPACE, COMBO_END};
 
 const uint16_t PROGMEM c_left_layer_enter_combo[] = {KC_F, KC_G, COMBO_END};
+
 combo_t key_combos[] = {
     [C_ESC] = COMBO(c_esc_combo, KC_ESC),
     [C_BSP_1] = COMBO(c_bsp_combo_1, KC_BSPC),
@@ -127,13 +134,16 @@ combo_t key_combos[] = {
     [C_TURKISH_I_1] = COMBO(c_turkish_i_combo_1, KC_QUOT),
     [C_TURKISH_I_2] = COMBO(c_turkish_i_combo_2, KC_QUOT),
     [C_DEL] = COMBO(c_del_combo, KC_DEL),
-    [C_LCMD] = COMBO(c_lcmd_combo, KC_LGUI),
+    [C_LCMD_1] = COMBO(c_lcmd_combo_1, KC_LGUI),
+    [C_LCMD_2] = COMBO(c_lcmd_combo_2, KC_LGUI),
     [C_RCMD] = COMBO(c_rcmd_combo, KC_LGUI),
-    [C_TAB] = COMBO(c_tab_combo, KC_TAB),
+    [C_TAB_1] = COMBO(c_tab_combo_1, KC_TAB),
+    [C_TAB_2] = COMBO(c_tab_combo_2, KC_TAB),
     [C_LCTL] = COMBO(c_lctl_combo, KC_LCTL),
     [C_RCTL] = COMBO(c_rctl_combo, KC_RCTL),
     [C_LALT] = COMBO(c_lalt_combo, KC_LALT),
-    [C_RALT] = COMBO(c_ralt_combo, KC_RALT),
+    [C_RALT_1] = COMBO(c_ralt_combo_1, KC_RALT),
+    [C_RALT_2] = COMBO(c_ralt_combo_2, KC_RALT),
     [C_LEFT_LAYER_ENTER] = COMBO(c_left_layer_enter_combo, MO(_ENT)),
 };
 // END Combo keys
@@ -141,14 +151,14 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // QWERTY
 //         ╭──────┬──────┬──────┬──────╮                ╭──────┬──────┬──────┬──────╮
-//  ╭──────┤  W [ESC]  E │  R   │  T   │                │  Y   │  U  [İ] I [DEL] O [BKSP]──╮
+//  ╭───[TAB] W [ESC]  E │  R   │  T   │                │  Y   │  U  [İ] I [DEL] O [BKSP]──╮
 //  │   Q  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  P   │
 //  ├─-ESC─┤  S [CMD]  D │ F [_ENT]  G │                │  H   │  J   │  K [CMD] L  ├─BKSP─┤
 //  │   A  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  Ş   │
 //  ├──TAB─┤  X [CTL] C [ALT] V │  B   │                │  N   │ M [ALT] Ö [CTL] Ç  ├──İ-──┤
 //  │LSFT/Z├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤RSFT/.│
 //  ╰──────╯             │TAB/* ├──────╮                ╭──────┤BKSP/*│             ╰──────╯
-//                       ╰──────┤LWR/, ├───────┬────────┤RSE/" ├──────╯
+//                       ╰───[CMD]LWR/,├───────┬────────┤RSE/"[ROPT}──╯
 //                              ╰──────┤SPACE/*│ ENT/*  ├──────╯
 //                                     ╰───────┴────────╯ 
 
@@ -186,7 +196,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  ╭──────┤      |      │  '   │  "   │                │ "("  │ ")"  │  ?   │ "_"  ├──────╮
 //  │  @   ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤ BKSP │
 //  ├──────┤      │ "/"  │ "\"  | "|"  │                │ "{"  │ "}"  │  Ğ   │  Ü   ├──────┤
-//  │      ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  İ   │
+//  │ScrSht├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  İ   │
 //  ├──────┤      |      │ "<"  │  ">" │                │ "["  │ "]"  │ "$"  │  "#" ├──────┤
 //  │CPSLCK├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤ "-"  │
 //  ╰──────╯             │      ├──────╮                ╭──────┤  ">" │             ╰──────╯
@@ -195,7 +205,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                     ╰───────┴────────╯ 
 [_LOWER] = LAYOUT(
     AT_SIGN, _______, _______, LSFT(KC_2), KC_NONUS_BACKSLASH,      KC_ASTR, KC_LPRN, KC_UNDS, KC_PLUS, KC_BSPC,      
-    _______, _______, _______, BACKSLASH, VERTICAL_PIPE,            CURLY_OPEN, CURLY_CLOSE, KC_LBRC, KC_RBRC, KC_QUOT, 
+    LGUI(LSFT(KC_4)), _______, _______, BACKSLASH, VERTICAL_PIPE,            CURLY_OPEN, CURLY_CLOSE, KC_LBRC, KC_RBRC, KC_QUOT, 
     KC_CAPS, _______, _______, KC_GRV, LSFT(KC_GRV),                SQUARE_OPEN, SQUARE_CLOSE, DOLLAR_SIGN, NUMBER_SIGN, KC_EQL,
                                 _______, _______, _______, KC_ENT, KC_GRV, LSFT(KC_GRV)
   ),
