@@ -19,7 +19,7 @@
 
 enum skywatch_layers {
     _QWERTY,
-    _TAB,
+    _ADJUST,
     _LOWER,
     _SPACE,
     _ENT,
@@ -72,7 +72,7 @@ enum trackball_keycodes {
 #define AT_SIGN RALT(KC_Q)
 
 // Layer Keys
-#define LAYER_TAB LT(_TAB, KC_TAB)
+#define LAYER_ADJUST LT(_TAB, KC_TAB)
 #define LAYER_LOWER LT(_LOWER, KC_BSLS)
 #define LAYER_SPACE LT(_SPACE, KC_SPC)
 #define LAYER_ENTER LT(_ENT, KC_ENT)
@@ -96,16 +96,17 @@ enum combos {
   C_TURKISH_I_2,
   C_DEL,
   C_LCMD_1,
-  C_LCMD_2,
   C_RCMD,
   C_TAB_1,
   C_TAB_2,
+  C_TAB_3,
   C_LCTL,
   C_RCTL,
   C_LALT,
   C_RALT_1,
   C_RALT_2,
   C_LEFT_LAYER_ENTER,
+  C_ADJUST_LAYER,
 };
 
 const uint16_t PROGMEM c_esc_combo[] = {KC_Q, KC_A, COMBO_END};
@@ -115,10 +116,10 @@ const uint16_t PROGMEM c_turkish_i_combo_1[] = {KC_SCLN, TH_RSFT_DOT, COMBO_END}
 const uint16_t PROGMEM c_turkish_i_combo_2[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM c_del_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM c_lcmd_combo_1[] = {KC_S, KC_D, COMBO_END};
-const uint16_t PROGMEM c_lcmd_combo_2[] = {LAYER_TAB, LAYER_LOWER, COMBO_END};
 const uint16_t PROGMEM c_rcmd_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM c_tab_combo_1[] = {KC_A, TH_LSFT_Z, COMBO_END};
 const uint16_t PROGMEM c_tab_combo_2[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM c_tab_combo_3[] = {LAYER_SPACE, LAYER_ENTER, COMBO_END};
 const uint16_t PROGMEM c_lctl_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM c_rctl_combo[] = {KC_COMM, KC_DOT, COMBO_END}; // Ö-Ç
 const uint16_t PROGMEM c_lalt_combo[] = {KC_C, KC_V, COMBO_END};
@@ -126,6 +127,7 @@ const uint16_t PROGMEM c_ralt_combo_1[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM c_ralt_combo_2[] = {LAYER_RAISE, LAYER_BACKSPACE, COMBO_END};
 
 const uint16_t PROGMEM c_left_layer_enter_combo[] = {KC_F, KC_G, COMBO_END};
+const uint16_t PROGMEM c_adjust_layer_combo[] = {KC_LGUI, LAYER_LOWER, COMBO_END};
 
 combo_t key_combos[] = {
     [C_ESC] = COMBO(c_esc_combo, KC_ESC),
@@ -135,16 +137,18 @@ combo_t key_combos[] = {
     [C_TURKISH_I_2] = COMBO(c_turkish_i_combo_2, KC_QUOT),
     [C_DEL] = COMBO(c_del_combo, KC_DEL),
     [C_LCMD_1] = COMBO(c_lcmd_combo_1, KC_LGUI),
-    [C_LCMD_2] = COMBO(c_lcmd_combo_2, KC_LGUI),
     [C_RCMD] = COMBO(c_rcmd_combo, KC_LGUI),
     [C_TAB_1] = COMBO(c_tab_combo_1, KC_TAB),
     [C_TAB_2] = COMBO(c_tab_combo_2, KC_TAB),
+    [C_TAB_3] = COMBO(c_tab_combo_3, KC_TAB),
     [C_LCTL] = COMBO(c_lctl_combo, KC_LCTL),
     [C_RCTL] = COMBO(c_rctl_combo, KC_RCTL),
     [C_LALT] = COMBO(c_lalt_combo, KC_LALT),
     [C_RALT_1] = COMBO(c_ralt_combo_1, KC_RALT),
     [C_RALT_2] = COMBO(c_ralt_combo_2, KC_RALT),
+    
     [C_LEFT_LAYER_ENTER] = COMBO(c_left_layer_enter_combo, MO(_ENT)),
+    [C_ADJUST_LAYER] = COMBO(c_adjust_layer_combo, MO(_ADJUST)),
 };
 // END Combo keys
 
@@ -157,20 +161,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  │   A  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  Ş   │
 //  ├──TAB─┤  X [CTL] C [ALT] V │  B   │                │  N   │ M [ALT] Ö [CTL] Ç  ├──İ-──┤
 //  │LSFT/Z├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤RSFT/.│
-//  ╰──────╯             │TAB/* ├──────╮                ╭──────┤BKSP/*│             ╰──────╯
-//                       ╰───[CMD]LWR/,├───────┬────────┤RSE/"[ROPT}──╯
+//  ╰──────╯             │ CMD  ├──────╮                ╭──────┤BKSP/*│             ╰──────╯
+//                       ╰──[_ADJ]LWR/,├───────┬────────┤RSE/"[ROPT}──╯
 //                              ╰──────┤SPACE/*│ ENT/*  ├──────╯
-//                                     ╰───────┴────────╯ 
+//                                     ╰─────[TAB]──────╯ 
 
   [_QWERTY] = LAYOUT(
     KC_Q, KC_W, KC_E, KC_R, KC_T,                   KC_Y, KC_U, KC_I, KC_O, KC_P,      
     KC_A, KC_S, KC_D, KC_F, KC_G,                   KC_H, KC_J, KC_K, KC_L, KC_SCLN, 
     TH_LSFT_Z, KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, KC_DOT, TH_RSFT_DOT,
-       LAYER_TAB, LAYER_LOWER, LAYER_SPACE, LAYER_ENTER, LAYER_RAISE, LAYER_BACKSPACE
+       KC_LGUI, LAYER_LOWER, LAYER_SPACE, LAYER_SPACE, LAYER_RAISE, LAYER_BACKSPACE
   ),
 
 
-// TAB layer, for configuration
+// AUST layer, for configuration
 //         ╭──────┬──────┬──────┬──────╮                ╭──────┬──────┬──────┬──────╮
 //  ╭──────┤ SAT+ │ HUE+ │ ANI+ │ TOG  │                │      │      │      │      ├──────╮
 //  │ BRI+ ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤LCKOSX│
@@ -183,7 +187,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                              ╰──────┤       │        ├──────╯
 //                                     ╰───────┴────────╯ 
 
-  [_TAB] = LAYOUT(
+  [_ADJUST] = LAYOUT(
     RGB_VAI,   RGB_SAI, RGB_HUI,  RGB_MOD,    RGB_TOG,            _______,  _______,  _______,  _______, LOCKSCREEN,
     RGB_VAD,   RGB_SAD, RGB_HUD,  RGB_RMOD,   _______,            BALL_HUI, BALL_WHT, BALL_DEC, _______, _______,     
     _______,   KC_BTN3, KC_BTN2,  KC_BTN1,    BALL_SCR,           QK_RBT,   QK_BOOT,   EE_CLR,  DB_TOGG, _______,     
@@ -289,13 +293,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______,                    KC_SLSH, KC_P1, KC_P2, KC_P3, KC_PEQL,
                                     _______, _______, KC_SPC, KC_BSPC, KC_P0, _______
   ),
-          
- 
 
 };
-
-
-
 
 
 // logo
@@ -319,8 +318,8 @@ oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
 }
 
 bool render_status(void) {
-    static const char PROGMEM atreus_logo[] = ACH_LOGO;
-    oled_write_P(atreus_logo, false);
+    static const char PROGMEM skywatch_logo[] = ACH_LOGO;
+    oled_write_P(skywatch_logo, false);
     oled_write_P(PSTR("Layer: "), false);
 
     switch (get_highest_layer(layer_state)) {
@@ -328,7 +327,7 @@ bool render_status(void) {
             oled_write_P(PSTR("QWERTY\n"), false);
             break;
         case 1:
-            oled_write_P(PSTR("TAB\n"), false);
+            oled_write_P(PSTR("ADJUST\n"), false);
             break;
         case 2:
             oled_write_P(PSTR("LOWER\n"), false);
