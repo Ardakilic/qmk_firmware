@@ -94,6 +94,7 @@ enum combos {
   C_BSP_2,
   C_TURKISH_I_1,
   C_TURKISH_I_2,
+  C_TURKISH_I_3,
   C_DEL,
   C_LCMD_1,
   C_RCMD,
@@ -114,6 +115,7 @@ const uint16_t PROGMEM c_bsp_combo_1[] = {KC_P, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM c_bsp_combo_2[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM c_turkish_i_combo_1[] = {KC_SCLN, TH_RSFT_DOT, COMBO_END};
 const uint16_t PROGMEM c_turkish_i_combo_2[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM c_turkish_i_combo_3[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM c_del_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM c_lcmd_combo_1[] = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM c_rcmd_combo[] = {KC_K, KC_L, COMBO_END};
@@ -135,6 +137,7 @@ combo_t key_combos[] = {
     [C_BSP_2] = COMBO(c_bsp_combo_2, KC_BSPC),
     [C_TURKISH_I_1] = COMBO(c_turkish_i_combo_1, KC_QUOT),
     [C_TURKISH_I_2] = COMBO(c_turkish_i_combo_2, KC_QUOT),
+    [C_TURKISH_I_3] = COMBO(c_turkish_i_combo_3, KC_QUOT),
     [C_DEL] = COMBO(c_del_combo, KC_DEL),
     [C_LCMD_1] = COMBO(c_lcmd_combo_1, KC_LGUI),
     [C_RCMD] = COMBO(c_rcmd_combo, KC_LGUI),
@@ -158,8 +161,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  ╭───[TAB] W [ESC]  E │  R   │  T   │                │  Y   │  U  [İ] I [DEL] O [BKSP]──╮
 //  │   Q  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  P   │
 //  ├─-ESC─┤  S [CMD]  D │ F [_ENT]  G │                │  H   │  J   │  K [CMD] L  ├─BKSP─┤
-//  │   A  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  Ş   │
-//  ├──TAB─┤  X [CTL] C [ALT] V │  B   │                │  N   │ M [ALT] Ö [CTL] Ç  ├──İ-──┤
+//  │   A  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼─────[İ] Ş   │
+//  ├──TAB─┤  X [CTL] C [ALT] V │  B   │                │  N   │ M [ALT] Ö [CTL] Ç  ├──İ───┤
 //  │LSFT/Z├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤RSFT/.│
 //  ╰──────╯             │ CMD  ├──────╮                ╭──────┤BKSP/*│             ╰──────╯
 //                       ╰──[_ADJ]LWR/,├───────┬────────┤RSE/"[ROPT}──╯
@@ -174,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
 
-// AUST layer, for configuration
+// ADJUST layer, for configuration
 //         ╭──────┬──────┬──────┬──────╮                ╭──────┬──────┬──────┬──────╮
 //  ╭──────┤ SAT+ │ HUE+ │ ANI+ │ TOG  │                │      │      │      │      ├──────╮
 //  │ BRI+ ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤LCKOSX│
@@ -277,20 +280,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Backspace layer
 //  * KC_PDOT is comma on the Turkish layout ¯\_(ツ)_/¯
 //         ╭──────┬──────┬──────┬──────╮                ╭──────┬──────┬──────┬──────╮
-//  ╭──────┤      |      │      │      │                │  /   │  7   │  8   │  9   ├──────╮
-//  │      ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  -   │
-//  ├──────┤      │      │      |      │                │  ,   │  4   │  5   │  6   ├──────┤
-//  │      ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  +   │
-//  ├──────┤      |      │      │ ENT  │                │  .   │  1   │  2   │  3   ├──────┤
-//  │      ├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤  =   │
+//  ╭──────┤      |      │      │  /   │                │  7   │  8   │  9   │  -   ├──────╮
+//  │      ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  *   │
+//  ├──────┤      │      │      |      │                │  4   │  5   │  6   │  +   ├──────┤
+//  │      ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤      │
+//  ├──────┤      |      │  ,   │  .   │                │  1   │  2   │  3   │  =   ├──────┤
+//  │      ├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤ ENT  │
 //  ╰──────╯             │      ├──────╮                ╭──────┤      │             ╰──────╯
 //                       ╰──────┤      ├───────┬────────┤   O  ├──────╯
 //                              ╰──────┤  SPC  │  BKSP  ├──────╯
 //                                     ╰───────┴────────╯ 
 [_BSPC] = LAYOUT(
-    _______, _______, _______, _______, _______,                    KC_PSLS, KC_P7, KC_P8, KC_P9, KC_PMNS,      
-    _______, _______, _______, _______, _______,                    KC_PDOT, KC_P4, KC_P5, KC_P6, KC_PPLS, 
-    _______, _______, _______, _______, _______,                    KC_SLSH, KC_P1, KC_P2, KC_P3, KC_PEQL,
+    _______, _______, _______, _______, KC_PSLS,                    KC_P7, KC_P8, KC_P9, KC_PMNS, KC_PAST,      
+    _______, _______, _______, _______, _______,                    KC_P4, KC_P5, KC_P6, KC_PPLS, _______, 
+    _______, _______, _______, KC_PDOT, KC_SLSH,                    KC_P1, KC_P2, KC_P3, KC_PEQL, KC_PENT,
                                     _______, _______, KC_SPC, KC_BSPC, KC_P0, _______
   ),
 
@@ -389,43 +392,43 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 }
 
 void ball_increase_hue(void){
-      if(red!=255&&green!=255&&blue!=255){
-        red =255;
+      if(red != 255 && green != 255 && blue != 255) {
+        red = 255;
       }
-      if (red==255&&green<255&&blue==0){
+      if (red == 255 && green < 255 && blue == 0) {
        green += 15;
-      } else if(green==255&&blue==0&&red>0){
-        red-=15;
-      } else if(red==0&&blue<255&&green==255){
-        blue+=15;
-      } else if(blue==255&&green>0&&red==0){
+      } else if(green == 255 && blue == 0 && red > 0) {
+        red -= 15;
+      } else if(red == 0 && blue < 255 && green == 255){
+        blue += 15;
+      } else if(blue == 255 && green > 0 && red == 0){
         green -= 15;
-      } else if(green == 0&&blue==255&&red<255){
-        red +=15;
-      } else if(green ==0&&blue>0&&red==255){
-        blue -=15;
+      } else if(green == 0 && blue == 255 && red < 255){
+        red += 15;
+      } else if(green == 0 && blue > 0 && red == 255){
+        blue -= 15;
       }
-      pimoroni_trackball_set_rgbw(red,green,blue,white);
+      pimoroni_trackball_set_rgbw(red, green, blue, white);
 }
 
 void decrease_color(void){
-  if (green>0){
-    green-=15;
+  if (green > 0){
+    green -= 15;
   }
-  if (red>0){
-    red-=15;
+  if (red > 0){
+    red -= 15;
   }
-  if (blue>0){
-    blue-=15;
+  if (blue > 0){
+    blue -= 15;
   }
   pimoroni_trackball_set_rgbw(red,green,blue,white);
 }
 
 void cycle_white(void){
-  if (white<255){
+  if (white < 255){
     white +=15;
-  } else{
-    white=0;
+  } else {
+    white = 0;
   }
   pimoroni_trackball_set_rgbw(red,green,blue,white);
 }
