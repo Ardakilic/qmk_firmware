@@ -24,7 +24,7 @@ enum skywatch_layers {
     _SPACE,
     _ENT,
     _RAISE,
-    _BSPC,
+    _DOT,
 };
 
 enum macos_keycodes {
@@ -77,24 +77,25 @@ enum trackball_keycodes {
 #define LAYER_SPACE LT(_SPACE, KC_SPC)
 #define LAYER_ENTER LT(_ENT, KC_ENT)
 #define LAYER_RAISE LT(_RAISE, KC_NONUS_BACKSLASH)
-#define LAYER_BACKSPACE LT(_BSPC, KC_BSPC)
+#define LAYER_DOT LT(_DOT, KC_SLSH)
 // END Layer Keys
 
 // Tap-hold keys
 #define TH_LSFT_Z LSFT_T(KC_Z)
-#define TH_RSFT_DOT RSFT_T(KC_SLSH)
+#define TH_RSFT_TURKISH_I RSFT_T(KC_QUOT)
 // END Tap-hold keys
 
 // Combo keys
 // Can be used with modifier and layer toggle keys
 // https://github.com/qmk/qmk_firmware/pull/8591#issuecomment-976019486
 enum combos {
-  C_ESC,
+  C_ESC_1,
+  C_ESC_2,
   C_BSP_1,
   C_BSP_2,
+  C_DOT_1,
   C_TURKISH_I_1,
   C_TURKISH_I_2,
-  C_TURKISH_I_3,
   C_DEL,
   C_LCMD_1,
   C_RCMD,
@@ -110,12 +111,13 @@ enum combos {
   C_ADJUST_LAYER,
 };
 
-const uint16_t PROGMEM c_esc_combo[] = {KC_Q, KC_A, COMBO_END};
+const uint16_t PROGMEM c_esc_combo_1[] = {KC_Q, KC_A, COMBO_END};
+const uint16_t PROGMEM c_esc_combo_2[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM c_bsp_combo_1[] = {KC_P, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM c_bsp_combo_2[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM c_turkish_i_combo_1[] = {KC_SCLN, TH_RSFT_DOT, COMBO_END};
-const uint16_t PROGMEM c_turkish_i_combo_2[] = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM c_turkish_i_combo_3[] = {KC_L, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM c_dot_combo_1[] = {KC_SCLN, TH_RSFT_TURKISH_I, COMBO_END};
+const uint16_t PROGMEM c_turkish_i_combo_1[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM c_turkish_i_combo_2[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM c_del_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM c_lcmd_combo_1[] = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM c_rcmd_combo[] = {KC_K, KC_L, COMBO_END};
@@ -126,18 +128,19 @@ const uint16_t PROGMEM c_lctl_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM c_rctl_combo[] = {KC_COMM, KC_DOT, COMBO_END}; // Ö-Ç
 const uint16_t PROGMEM c_lalt_combo[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM c_ralt_combo_1[] = {KC_M, KC_COMM, COMBO_END};
-const uint16_t PROGMEM c_ralt_combo_2[] = {LAYER_RAISE, LAYER_BACKSPACE, COMBO_END};
+const uint16_t PROGMEM c_ralt_combo_2[] = {LAYER_RAISE, LAYER_DOT, COMBO_END};
 
 const uint16_t PROGMEM c_left_layer_enter_combo[] = {KC_F, KC_G, COMBO_END};
 const uint16_t PROGMEM c_adjust_layer_combo[] = {KC_LGUI, LAYER_LOWER, COMBO_END};
 
 combo_t key_combos[] = {
-    [C_ESC] = COMBO(c_esc_combo, KC_ESC),
+    [C_ESC_1] = COMBO(c_esc_combo_1, KC_ESC),
+    [C_ESC_2] = COMBO(c_esc_combo_2, KC_ESC),
     [C_BSP_1] = COMBO(c_bsp_combo_1, KC_BSPC),
     [C_BSP_2] = COMBO(c_bsp_combo_2, KC_BSPC),
+    [C_DOT_1] = COMBO(c_dot_combo_1, KC_SLSH),
     [C_TURKISH_I_1] = COMBO(c_turkish_i_combo_1, KC_QUOT),
     [C_TURKISH_I_2] = COMBO(c_turkish_i_combo_2, KC_QUOT),
-    [C_TURKISH_I_3] = COMBO(c_turkish_i_combo_3, KC_QUOT),
     [C_DEL] = COMBO(c_del_combo, KC_DEL),
     [C_LCMD_1] = COMBO(c_lcmd_combo_1, KC_LGUI),
     [C_RCMD] = COMBO(c_rcmd_combo, KC_LGUI),
@@ -162,18 +165,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  │   Q  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤  P   │
 //  ├─-ESC─┤  S [CMD]  D │ F [_ENT]  G │                │  H   │  J   │  K [CMD] L  ├─BKSP─┤
 //  │   A  ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼─────[İ] Ş   │
-//  ├──TAB─┤  X [CTL] C [ALT] V │  B   │                │  N   │ M [ALT] Ö [CTL] Ç  ├──İ───┤
-//  │LSFT/Z├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤RSFT/.│
-//  ╰──────╯             │ CMD  ├──────╮                ╭──────┤BKSP/*│             ╰──────╯
-//                       ╰──[_ADJ]LWR/,├───────┬────────┤RSE/"[ROPT}──╯
+//  ├──TAB─┤  X [CTL] C [ALT] V │  B   │                │  N   │ M [ALT] Ö [CTL] Ç  ├─[.]──┤
+//  │LSFT/Z├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤RSFT/İ│
+//  ╰──────╯             │ CMD  ├──────╮                ╭──────┤  . /*│             ╰──────╯
+//                       ╰──[_ADJ]LWR/,├───────┬────────┤RSE/"[ROPT]──╯
 //                              ╰──────┤SPACE/*│ ENT/*  ├──────╯
 //                                     ╰─────[TAB]──────╯ 
 
   [_QWERTY] = LAYOUT(
     KC_Q, KC_W, KC_E, KC_R, KC_T,                   KC_Y, KC_U, KC_I, KC_O, KC_P,      
     KC_A, KC_S, KC_D, KC_F, KC_G,                   KC_H, KC_J, KC_K, KC_L, KC_SCLN, 
-    TH_LSFT_Z, KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, KC_DOT, TH_RSFT_DOT,
-       KC_LGUI, LAYER_LOWER, LAYER_SPACE, LAYER_ENTER, LAYER_RAISE, LAYER_BACKSPACE
+    TH_LSFT_Z, KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, KC_DOT, TH_RSFT_TURKISH_I,
+       KC_LGUI, LAYER_LOWER, LAYER_SPACE, LAYER_ENTER, LAYER_RAISE, LAYER_DOT
   ),
 
 
@@ -225,15 +228,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  │      ├──────┼──────┼──────┼──────┤                ├──────┼──────┼──────┼──────┤ BKSP │
 //  ├──────┤      |      │ DND  │LCKOSX│                │LFTCLK│RGTCLK│SCRLCK│MDLCLK├──────┤
 //  │ LSFT ├──────┴──────┼──────┼──────╯                ╰──────┼──────┼──────┴──────┤      │
-//  ╰──────╯             │      ├──────╮                ╭──────┤      │             ╰──────╯
+//  ╰──────╯             │      ├──────╮                ╭──────┤ BKSP │             ╰──────╯
 //                       ╰──────┤ LGUI ├───────┬────────┤      ├──────╯
-//                              ╰──────┤       │        ├──────╯
+//                              ╰──────┤       │ ENTER  ├──────╯
 //                                     ╰───────┴────────╯ 
 [_SPACE] = LAYOUT(
     KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC,                    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,      
     _______, KC_MISSION_CONTROL, KC_SPOTLIGHT, KC_DICTATION, KC_LAUNCHPAD,                 KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_BSPC, 
     KC_LSFT, _______, _______, KC_DO_NOT_DISTURB, KC_LOCK_SCREEN,                 KC_MS_BTN1, KC_MS_BTN2, BALL_SCR, BALL_MCL, _______,
-                                    _______, KC_LGUI, _______, _______, _______, _______
+                                    _______, KC_LGUI, _______, KC_ENT, _______, _______
   ),
 
 // Enter: Functions + Media Layer
@@ -290,7 +293,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                       ╰──────┤      ├───────┬────────┤   O  ├──────╯
 //                              ╰──────┤  SPC  │  BKSP  ├──────╯
 //                                     ╰───────┴────────╯ 
-[_BSPC] = LAYOUT(
+[_DOT] = LAYOUT(
     _______, _______, _______, _______, KC_PSLS,                    KC_P7, KC_P8, KC_P9, KC_PMNS, KC_PAST,      
     _______, _______, _______, _______, _______,                    KC_P4, KC_P5, KC_P6, KC_PPLS, _______, 
     _______, _______, _______, KC_PDOT, KC_SLSH,                    KC_P1, KC_P2, KC_P3, KC_PEQL, KC_PENT,
