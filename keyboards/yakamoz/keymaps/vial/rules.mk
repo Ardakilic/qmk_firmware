@@ -8,3 +8,5 @@ COMBO_ENABLE = yes
 
 RGBLIGHT_ENABLE = yes
 WS2812_DRIVER = vendor
+# overwrite OLED driver with capitalized equivalent
+OLED_DRIVER = SSD1306
