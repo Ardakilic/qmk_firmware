@@ -80,15 +80,12 @@
         "nkro": true,
         "rgb_matrix": true
     },
-<<<<<<< HEAD
     "qmk": {
         "locking": {
             "enabled": true,
             "resync": true
         }
     },
-=======
->>>>>>> eb9f5bde39 (Migrate features and LTO from rules.mk to data driven (#23302))
     "matrix_pins": {
       "cols": ["F0", "F1", "F4", "F5", "F6", "F7", "C7", "B6", "B5", "B4", "D7", "D6", "D4", "E6", "B0", "B3"],
       "rows": ["D0", "D1", "D2", "D3", "D5"]

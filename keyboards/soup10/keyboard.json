@@ -19,15 +19,12 @@
         "mousekey": false,
         "nkro": true
     },
-<<<<<<< HEAD
     "qmk": {
         "locking": {
             "enabled": true,
             "resync": true
         }
     },
-=======
->>>>>>> eb9f5bde39 (Migrate features and LTO from rules.mk to data driven (#23302))
     "matrix_pins": {
         "cols": ["D7", "E6", "B4"],
         "rows": ["D1", "D0", "D4", "C6"]
