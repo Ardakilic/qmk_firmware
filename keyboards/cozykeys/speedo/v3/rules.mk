@@ -1,0 +1,1 @@
+PIN_COMPATIBLE = elite_c
