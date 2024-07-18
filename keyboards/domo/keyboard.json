@@ -47,7 +47,7 @@
   },
   "matrix_pins": {
     "rows": [ "B3", "B2", "B6"],
-    "cols": [ "B1", "E6", "E4", "E5" ]
+    "cols": [ "B1", "E6", "B4", "B5" ]
   },
   "diode_direction": "ROW2COL",
   "processor": "atmega32u4",
