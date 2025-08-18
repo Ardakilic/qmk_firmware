@@ -2,7 +2,7 @@
 
 The information contained in `info.json` is combined with the `config.h` and `rules.mk` files, dynamically generating the necessary configuration for your keyboard at compile time. It is also used by the [QMK API](https://github.com/qmk/qmk_api), and contains the information [QMK Configurator](https://config.qmk.fm/) needs to display a representation of your keyboard. Its key/value pairs are ruled by the [`data/schemas/keyboard.jsonschema`](https://github.com/qmk/qmk_firmware/blob/master/data/schemas/keyboard.jsonschema) file. To learn more about the why and how of the schema file see the [Data Driven Configuration](data_driven_config) page.
 
-You can create `info.json` files at every level under `qmk_firmware/keyboards/<keyboard_name>`. These files are combined, with more specific files overriding keys in less specific files. This means you do not need to duplicate your metadata information. For example, `qmk_firmware/keyboards/clueboard/info.json` specifies information common to all Clueboard products, such as `manufacturer` and `maintainer`, while `qmk_firmware/keyboards/clueboard/66/info.json` contains more specific information about Clueboard 66%.
+You can create `info.json` files at every level under `qmk_firmware/keyboards/<keyboard>`. These files are combined, with more specific files overriding keys in less specific files. This means you do not need to duplicate your metadata information. For example, `qmk_firmware/keyboards/clueboard/info.json` specifies information common to all Clueboard products, such as `manufacturer` and `maintainer`, while `qmk_firmware/keyboards/clueboard/66/info.json` contains more specific information about Clueboard 66%.
 
 ## General Metadata {#general-metadata}
 
@@ -273,6 +273,14 @@ Configures the [Encoder](features/encoders) feature.
             * `resolution` <Badge type="info">Number</Badge>
                 * The number of edge transitions on both pins required to register an input.
                 * Default: `4`
+
+## Host {#host}
+
+* `host`
+    * `default`
+        * `nkro` <Badge type="info">Boolean</Badge>
+            * The default nkro state.
+            * Default: `false`
 
 ## Indicators {#indicators}
 
@@ -818,9 +826,6 @@ Configures the [Stenography](features/stenography) feature.
     * `vid` <Badge type="info">String</Badge> <Badge>Required</Badge>
         * The USB vendor ID as a four-digit hexadecimal number.
         * Example: `"0xC1ED"`
-    * `force_nkro` <Badge type="info">Boolean</Badge>
-        * Force NKRO to be active.
-        * Default: `false`
     * `max_power` <Badge type="info">Number</Badge>
         * The maximum current draw the host should expect from the device. This does not control the actual current usage.
         * Default: `500` (500 mA)
